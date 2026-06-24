@@ -3,19 +3,8 @@
 
 @import "{{ site.theme }}";
 
-// Shrink the big banner header down to a thin strip
+// Remove the banner header (title, tagline, "View on GitHub" button) entirely
 .page-header {
-  padding: 6px 10px;
-  min-height: 0;
-}
-
-.page-header .project-name {
-  font-size: 14px;
-  margin: 0;
-  line-height: 1.2;
-}
-
-.page-header .project-tagline {
   display: none;
 }
 body {
