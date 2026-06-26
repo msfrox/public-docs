@@ -3,6 +3,99 @@
 All notable changes to Infiniboard. Versions follow [semver](https://semver.org/); dates are
 release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
 
+## 4.1.0 — 2026-06-26
+
+A batch of P1 + P2 fixes from testing — colour/eyedropper/text correctness, frame-wrap theme, note
+z-order, transparent frames, note fonts/bold — plus a transparency control, reset-to-natural-size,
+the connector skill on MCP, an in-app guide, and the Cloudflare-Access finding for the connector.
+
+### Added
+- **Transparency control in the colour picker.** The **Custom** tab of every colour popup now has an
+  **alpha slider** (checkerboard + transparent→solid gradient). It emits `#rrggbb` when opaque and
+  `#rrggbbaa` when not (the 8-digit form Excalidraw already stores); the SV/hue pickers preserve the
+  current alpha. The direct-hex workaround still works. Fork: `ColorPicker/SVPicker.tsx`,
+  `ColorPicker/ColorPicker.scss`.
+- **Excalidraw's own fonts in the note font picker.** Excalifont (the hand-drawn default), Virgil,
+  Nunito, Comic Shanns and Lilita One are now selectable for note bodies — Excalidraw registers them in
+  `document.fonts` at init, so the note HTML uses them by name (no fragile per-subset `@font-face`).
+  Fork: `components/NoteFormatPanel.tsx`.
+- **Reset image/video to natural size.** A command-palette action ("Reset image/video to natural size")
+  resizes the selected image(s) to their file's natural pixels, or video card(s) to their stored w/h,
+  keeping each element centred. `src/App.tsx`.
+- **In-app guide + repo link.** The Help dialog's links now point at Infiniboard's own GUIDE.md and repo
+  (was Excalidraw docs/blog/issues/YouTube). Fork: `components/HelpDialog.tsx`.
+- **Connector: Cloudflare Access support.** The MCP server now forwards Access **service-token** headers
+  (`CF_ACCESS_CLIENT_ID` / `CF_ACCESS_CLIENT_SECRET`) when set, so it can authenticate *past* Access
+  while `IB_TOKEN` still identifies the user. `tools/mcp-server.mjs`; setup in AI-CONNECTOR.md.
+
+### Fixed
+- **Transparent frames: no blue tint, and grabbable from inside.** A frame with a transparent background
+  still painted a faint blue wash (`rgba(0,0,200,0.04)`) and couldn't be selected/dragged by its empty
+  interior (only the border/name). Now: no fill is painted when transparent, and frames are always
+  draggable-from-inside (clicking a child still selects the child first). Fork:
+  `element/renderElement.ts`, `element/collision.ts`.
+- **Bold/italic work for the bundled note fonts.** Their `@font-face` rules declared `font-weight: 100
+  900` on single-weight (400) files, so the browser thought 700 was covered and never synthesized bold
+  (only the variable Google Sans Flex worked). Declared at `400` now (+ explicit `font-synthesis`), so
+  bold/italic render via synthesis for every family. `src/styles.css`. (Real variable weights are a
+  tracked follow-up — see BACKLOG.)
+- **Text colour can be changed again.** The fork's `actionChangeStrokeColor` skipped **every** text
+- **Text colour can be changed again.** The fork's `actionChangeStrokeColor` skipped **every** text
+  element (to stop a shape's Stroke recolouring its bound label), which also blocked **standalone**
+  text (the text tool) from taking any colour — clicking swatches/hex did nothing. It now skips only
+  *bound* labels (`!(isTextElement(el) && el.containerId)`); standalone text recolours via Stroke as
+  before. Fork: `actions/actionProperties.tsx`.
+- **Wrap-selection-in-frame no longer flips the board to light mode.** When an action returns an
+  appState without a `theme` and the host passes no `theme` prop, `syncActionResult` recomputed
+  `theme = …?.theme || props.theme || THEME.LIGHT` and reset to light; `wrapSelectionInFrame` returned
+  only `{ selectedElementIds }`. Fixed at the root (fall back to the live `this.state.theme` before
+  LIGHT) and made the action spread `...appState` like its siblings. Fork: `components/App.tsx`,
+  `actions/actionFrame.ts`.
+- **Eyedropper is dark-mode correct.** This fork bakes the dark filter into the static canvas at render
+  time, so the sampled pixel is in *display* space while colour fields are *storage* space — the picker
+  returned the non-inverted value. It now converts the sample back through `applyDarkModeFilter` in dark
+  mode (≈involutive, so it round-trips: the picked value matches the palette and re-renders as the
+  sampled colour). Fork: `components/EyeDropper.tsx`.
+- **Note stroke follows z-order.** A note's border was only canvas-drawn (behind every note's DOM
+  overlay), so it rendered behind all other notes regardless of order. It's now mirrored into the DOM
+  card as a CSS border (like the background already was) so it sits in the overlay layer and follows the
+  same z-order. `src/embeddables/cards.tsx`. (Notes still composite above native shapes — inherent to
+  Excalidraw's HTML-overlay embeddables; see BACKLOG.)
+- **VS Code TypeScript deprecation warnings.** The vendored Excalidraw configs used the deprecated
+  `moduleResolution: node10` (`"node"`/`"Node"`) + `baseUrl`. `ignoreDeprecations: "6.0"` is rejected by
+  the fork's build TS (5.9.3), so modernized instead: `moduleResolution: "bundler"` and dropped
+  `baseUrl` (paths resolve without it). No deprecated options remain; the fork build still passes.
+  `excalidraw/tsconfig.json`, `excalidraw/packages/tsconfig.base.json`.
+
+### Changed
+- **Connector Claude skill now leads with live MCP sync.** `.claude/skills/infiniboard-board/SKILL.md`
+  rewritten around the MCP tools (`read_board` / `draw` / `list_boards` / `create_board` /
+  `set_active_board`) as the preferred path, with the file-import workflow as the fallback. Rebuilt the
+  distributable `infiniboard-board.zip`; both stay in the repo.
+- **GUIDE.md** expanded into a full usage reference: complete keyboard shortcuts
+  (tools/edit/arrange/view/file), per-tool nuances (arrow binding, multi-point lines, crop, convert
+  type, resize-from-centre, grid/snap), the transparency control + eyedropper, and the web-embed
+  first-link note.
+
+### Known / investigated
+- **The live MCP/REST connector is blocked by Cloudflare Access.** Access fronts board.gear.lk and
+  redirects token-only API calls to its login page (302) before the Worker runs, so the `ibk_` token
+  can't authenticate externally (the in-app bridge + file import are unaffected). The connector code is
+  correct (verified against the local Worker). Resolve by adding an Access **service token** or a
+  **bypass** policy for the connector paths — see [AI-CONNECTOR.md](AI-CONNECTOR.md) §4 and BACKLOG (P1).
+- **Embed first-link race** still open (diagnosed; workaround in GUIDE) — needs interactive debugging.
+
+### Fork edits (require `npm run fork:build`)
+- `components/App.tsx` — preserve current theme in `syncActionResult`.
+- `actions/actionFrame.ts` — `wrapSelectionInFrame` spreads `...appState`.
+- `actions/actionProperties.tsx` — Stroke recolours standalone text, not bound labels.
+- `components/EyeDropper.tsx` — dark-mode colour-space conversion.
+- `components/ColorPicker/SVPicker.tsx` + `ColorPicker.scss` — alpha slider.
+- `components/NoteFormatPanel.tsx` — Excalidraw's own fonts in the note picker.
+- `components/HelpDialog.tsx` — Infiniboard guide + repo links.
+- `element/renderElement.ts` + `element/collision.ts` — transparent frames (no tint, grabbable inside).
+- `tsconfig.json` + `packages/tsconfig.base.json` — `bundler` resolution, no `baseUrl`.
+
 ## 4.0.1 — 2026-06-23
 
 ### Fixed

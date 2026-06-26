@@ -23,27 +23,34 @@ many **boards** and switch between them.
 
 ## The toolbar (native tools)
 
-The top toolbar — numbers are the keyboard shortcuts:
+The top toolbar — each tool has a number **and** a letter shortcut (either works):
 
-| Key | Tool | Use |
+| Keys | Tool | Use & nuances |
 |----|------|-----|
-| `1` / `V` | Selection | Select, move, resize, rotate. |
-| `2` / `R` | Rectangle | Boxes (the workhorse of diagrams). |
+| `1` / `V` | Selection | Select, move, resize, rotate. Drag a marquee to select many; **Shift-click** to add/remove from the selection. |
+| `2` / `R` | Rectangle | Boxes (the workhorse of diagrams). Hold **Shift** while drawing for a perfect square. |
 | `3` / `D` | Diamond | Decisions / datastores. |
-| `4` / `O` | Ellipse | Start/end nodes, bubbles. |
-| `5` / `A` | Arrow | Connectors — **drag from one shape's edge to another to bind** them (the arrow then follows when you move either shape). |
-| `6` / `L` | Line | Plain lines / dividers. |
-| `7` / `P` | Draw | Freehand pen. |
-| `8` / `T` | Text | Free-floating text. |
+| `4` / `O` | Ellipse | Start/end nodes, bubbles. Hold **Shift** for a circle. |
+| `5` / `A` | Arrow | Connectors — **drag from one shape's edge to the other** to *bind* both ends (the arrow then follows when either shape moves). **Click-click-click** places a multi-point arrow; **Esc**/double-click ends it. Hold **Ctrl/Cmd** while drawing to *prevent* binding. |
+| `6` / `L` | Line | Plain lines / dividers. Multi-point like arrows; close the path back to the start for a polygon. |
+| `7` / `P` | Draw (freedraw) | Freehand pen. Stroke width/colour from the panel. |
+| `8` / `T` | Text | Free-floating text. Just click and type; **Esc** or click away to finish. |
 | `9` | Image | Insert an image (also: paste or drag a file in). |
-| `0` | Eraser | Delete by scrubbing. |
-| `F` | Frame | A named container/region — great for grouping a section (e.g. one "swimlane" or a phone screen). Frames can have a background colour. |
-| — | Lasso | Free-form selection (command palette → "Lasso"). |
+| `0` / `E` | Eraser | Delete by scrubbing over elements. |
+| `F` | Frame | A named container/region — great for grouping a section (a "swimlane", a phone screen). Frames have a Background colour + fill style; moving a frame moves its children. |
+| `H` | Hand | Pan tool (for trackpads / touch). |
+| `K` | Laser pointer | A temporary pointer for presenting — trails fade; draws nothing permanent. |
+| `Q` | Keep tool active (lock) | Toggle so the chosen tool stays selected after each use instead of snapping back to Selection. |
+| — | Lasso | Free-form (non-rectangular) selection — command palette → "Lasso". |
+| `I` / `Shift+S` / `Shift+G` | Eyedropper | Sample a colour from anywhere on the canvas. (Now dark-mode-correct — it returns the colour you actually see.) |
 
-**Tips**
-- Double-click empty canvas = quick text. Double-click a shape = edit its label.
-- Hold `Space` (or scroll-wheel drag) to pan; scroll to pan, `Ctrl`+scroll to zoom.
-- Select a shape and an arrow you draw from its edge snaps + **binds**.
+**Editing nuances**
+- **Double-click** empty canvas = quick text. **Double-click a shape** = edit its label. **Enter** edits the selected element's text; **Ctrl/Cmd+Enter** edits a line/arrow's points.
+- **Tab / Shift+Tab** with a shape selected **converts its type** (rectangle → diamond → ellipse …).
+- **Crop an image**: double-click it (or Enter), drag the handles, **Enter/Esc** to finish.
+- **Resize from the centre**: hold **Alt/Option** while dragging a handle. **Keep aspect ratio**: hold **Shift**.
+- **Nudge** a selection with the **arrow keys** (1px; with the grid on it snaps by the grid step). Hold **Ctrl/Cmd** while dragging to bypass snapping.
+- Hold **Space** (or scroll-wheel drag) to pan; **scroll** to pan vertically, **Shift+scroll** horizontally, **Ctrl/Cmd+scroll** to zoom.
 
 ## Infiniboard cards (the extras)
 
@@ -69,6 +76,11 @@ Paste/insert any `https://` URL as an **embeddable** to show a live site in a fr
 "Edit link" or Ctrl+K to set/change the URL). Sites that block framing (`X-Frame-Options`/CSP) won't
 load — that's the remote site's choice.
 
+> **Note:** when you draw an *empty* web-embed and set its URL for the very first time, it can stay
+> blank until you open "Edit link" once more and confirm — the second time sticks. (A known timing
+> quirk; a one-line re-entry is the workaround for now.) Pasting a URL straight onto the canvas — which
+> makes a richer **Link** card — avoids it entirely.
+
 ---
 
 ## Styling — the properties panel
@@ -76,9 +88,13 @@ load — that's the remote site's choice.
 Select something and the left panel shows its style. Key controls:
 
 - **Background** — fill colour. Click the swatch for the full picker: a **Palette** tab and a **Custom**
-  tab with a draggable colour square + hue strip. (In dark mode the picker shows the colour as it will
-  actually appear on the canvas.)
-- **Stroke** — the outline/border colour (and, for plain text/shape labels, the text colour).
+  tab with a draggable colour square + hue strip + an **alpha (transparency) slider**. (In dark mode the
+  picker shows the colour as it will actually appear on the canvas.) You can also type a hex code — incl.
+  an **8-digit `#rrggbbaa`** for transparency — directly, or use the **eyedropper** (the pipette icon, or
+  press `I`) to sample any colour on the canvas.
+- **Stroke** — the outline/border colour. For a **plain text** element this *is* its text colour. For a
+  **shape with a label**, Stroke is only the outline — set the label colour with the separate **Text**
+  picker (see below).
 - **Fill style** — hachure / cross-hatch / solid. **Stroke width / style** — thin→bold, solid/dashed/dotted.
 - **Edges** — sharp or rounded corners. **Opacity** — transparency.
 - **Font family / size** — for text elements.
@@ -127,12 +143,38 @@ and draw on your live board via the MCP server. Setup + usage in [AI-CONNECTOR.m
 
 ---
 
-## Keyboard shortcuts cheat-sheet
+## Keyboard shortcuts — full reference
 
-`1`–`0` tools · `V` select · `F` frame · `M` minimap · `Ctrl/Cmd+K` command palette · `N` note ·
-`G` task · `I` timer · `Y` YouTube · `J` link · `U` upload · `Enter` edit selected note ·
-`Ctrl/Cmd+Z` undo · `Ctrl/Cmd+D` duplicate · `Ctrl/Cmd+C/V` copy/paste · `Del` delete ·
-`Ctrl/Cmd`+scroll zoom · `Space`-drag pan.
+Press **`?`** any time to open the in-app shortcuts dialog (it includes the Infiniboard inserts as their
+own island). The essentials:
+
+**Tools** — `1`/`V` select · `2`/`R` rectangle · `3`/`D` diamond · `4`/`O` ellipse · `5`/`A` arrow ·
+`6`/`L` line · `7`/`P` draw · `8`/`T` text · `9` image · `0`/`E` eraser · `F` frame · `H` hand ·
+`K` laser · `Q` keep-tool-active (lock) · `I` (or `Shift+S`/`Shift+G`) eyedropper.
+
+**Infiniboard inserts** — `N` note · `G` task (Planner) · `I` timer · `Y` YouTube · `J` link ·
+`U` upload file(s) · `M` minimap · `Ctrl/Cmd+K` command palette.
+
+**Edit** — `Ctrl/Cmd+Z` undo · `Ctrl/Cmd+Shift+Z` redo · `Ctrl/Cmd+C` copy · `Ctrl/Cmd+V` paste ·
+`Ctrl/Cmd+X` cut · `Ctrl/Cmd+D` duplicate (or **Alt-drag**) · `Del` delete · `Ctrl/Cmd+A` select all ·
+`Ctrl/Cmd+Alt+C` / `Ctrl/Cmd+Alt+V` copy / paste **styles** · `Enter` edit text/label ·
+`Ctrl/Cmd+Enter` edit line/arrow points · `Tab` / `Shift+Tab` convert element type.
+
+**Arrange** — `Ctrl/Cmd+G` group · `Ctrl/Cmd+Shift+G` ungroup · `Ctrl/Cmd+]` bring forward ·
+`Ctrl/Cmd+[` send backward · `Ctrl/Cmd+Shift+]` to front · `Ctrl/Cmd+Shift+[` to back ·
+`Ctrl/Cmd+Shift+L` lock/unlock · `Shift+H` / `Shift+V` flip horizontal / vertical ·
+align via right-click → Align/Distribute (or `Ctrl/Cmd+Shift+`+arrows).
+
+**View** — `M` minimap · `Ctrl/Cmd++` / `Ctrl/Cmd+-` zoom in/out · `Ctrl/Cmd+0` reset zoom ·
+`Shift+1` zoom-to-fit · `Shift+2` zoom-to-selection · `Ctrl/Cmd+'` toggle grid · `Alt+S` object snap ·
+`Alt+Z` zen mode · `Shift+Alt+D` toggle dark/light · `Space`-drag (or `H`) pan · `Ctrl/Cmd+scroll` zoom ·
+`Shift+scroll` horizontal scroll.
+
+**File** — `Ctrl/Cmd+S` save/export to disk · `Ctrl/Cmd+O` load scene · `Ctrl/Cmd+Shift+E` export image ·
+`Shift+Alt+C` copy canvas as PNG · `Ctrl/Cmd+F` search the board.
+
+> **Grid tip:** with the grid on (`Ctrl/Cmd+'`), arrow keys move a selection by the grid step (and
+> drawing/moving snaps to it). Hold **Ctrl/Cmd** while dragging to ignore snapping for one move.
 
 ---
 
