@@ -12,9 +12,9 @@ An **infinite canvas** you draw on. Two kinds of things live on it:
 
 - **Native shapes** — rectangles, arrows, text, frames, images. Fast, universal, the bread and butter
   of diagrams and mindmaps. Fully editable, undoable, exportable.
-- **Cards** — Infiniboard's richer widgets: Markdown **notes**, **task** cards (linked to the Planner),
-  **timers**, **link**/**YouTube**/**video**/**file** cards, **tables**. Use these when you want
-  interactivity, not just a drawing.
+- **Cards** — Infiniboard's richer widgets: Markdown **notes** (which support tables), **task** cards
+  (linked to the Planner), **timers**, **link**/**YouTube**/**video**/**file** cards. Use these when
+  you want interactivity, not just a drawing.
 
 Everything autosaves to your private space (you'll see "Saving… / Saved" in the menu). You can keep
 many **boards** and switch between them.
@@ -65,10 +65,14 @@ Insert from the toolbar's **"more tools"** (the extra-tools dropdown) or the sho
 | `J` | **Link** | A URL → link-preview card (title/description/image). |
 | `U` | **File** | Upload one or many files (images inline-ish, videos playable, anything downloadable). |
 | — | **Video** | A dedicated, aspect-correct playable video. |
-| — | **Table** | A simple editable grid. |
+| — | **HTML card** | Write/paste HTML — it renders live in a sandboxed frame (scripts run; no cookies/storage/origin access). A toggle button on the card switches between the rendered view and the raw source, so you can always see what you're editing. Good for Claude-generated visuals or a quick custom widget. Double-click to edit the source (plain text, no rich editor). |
 
 You can also **paste**: a URL becomes a Link/YouTube card; an **image** drops straight onto the board
 (`Ctrl/Cmd+V`); other files become a File card.
+
+> The old **Table** card is deprecated — it's no longer in the insert list (unmaintained, worse
+> formatting than a Note). Use a **Note** with a Markdown table instead; existing table cards on old
+> boards still render and edit, and the command palette has a "Convert table card → note" action.
 
 ## Web embeds
 

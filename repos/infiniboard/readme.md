@@ -91,7 +91,8 @@ src/App.tsx                Main shell: auth gate, multi-board store, autosave, R
                            inserts, planner integration, the Excalidraw canvas + custom menu.
 src/share.tsx              Public, read-only share viewer (share.html entry).
 src/embeddables/cards.tsx  Custom cards rendered as Excalidraw "embeddable" elements
-                           (note / task / timer / link / youtube / video / file / table).
+                           (note / task / timer / link / youtube / video / file; table is
+                           legacy-render-only, deprecated for creation).
 src/components/NoteEditor.tsx  In-place WYSIWYG Markdown editor (TipTap) for note cards.
 src/components/            Overlays: task editor, planner pin panel, AI, share, board manager.
 src/api.ts                 Typed client for the /api/* endpoints.
@@ -115,8 +116,7 @@ flyout, eraser, marquee select, group/align, mobile pinch-zoom.
 read-only **share links** (live — always show the latest version).
 
 **Known gaps / next (see [BACKLOG.md](BACKLOG.md)):** real-time multi-user collaboration (needs a
-sync backend), table cards (Excalidraw has no native table), exact R2 usage stats, full Planner
-task-editor parity, minimap.
+sync backend), exact R2 usage stats, full Planner task-editor parity, minimap.
 
 ## Documentation
 
@@ -130,8 +130,12 @@ task-editor parity, minimap.
 
 ## Version history
 
-Full notes per release are in **[CHANGELOG.md](CHANGELOG.md)**. Current: **4.0.0** (2026-06-23) — the
-**Board ⇄ Claude connector** (live MCP sync + scene-spec + `window.infiniboard` + Import diagram +
+Full notes per release are in **[CHANGELOG.md](CHANGELOG.md)**. Current: **4.2.0** (2026-07-04) —
+connector **board targeting** (create_board/draw land on the right board via an ops queue, no more
+clobbering), **table card deprecated** (Markdown notes replace it; legacy tables still render),
+`verify-connector.mjs` + per-token revoke. Prior: **4.1.0** — colour/eyedropper/text fixes, frame-wrap
+theme, transparency control, reset-to-natural-size, Cloudflare-Access connector support. **4.0.0** —
+the **Board ⇄ Claude connector** (live MCP sync + scene-spec + `window.infiniboard` + Import diagram +
 the `infiniboard-board` skill), separate shape **Text** colour, card-content **undo**, scene-portable
 cards (copy/paste/export), native copy/paste + image-paste fixes, library persistence, lazy note
 editor, and CI font-deploy hardening. Prior: **3.0.0** — frame fill, 2D colour picker, 23 fonts,

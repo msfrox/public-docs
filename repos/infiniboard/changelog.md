@@ -3,6 +3,57 @@
 All notable changes to Infiniboard. Versions follow [semver](https://semver.org/); dates are
 release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
 
+## Unreleased
+
+### Added
+- **HTML renderer card.** A new card kind (`"html"`) that renders pasted/written HTML live in a
+  sandboxed iframe (`sandbox="allow-scripts"` only — scripts run but can't read cookies/storage or
+  reach the parent origin). A toggle on the card chrome switches between the rendered view and the
+  raw source; double-click opens a plain-textarea source editor (one undo checkpoint per edit
+  session, same pattern as the note card). Insert via the shapes dropdown, command palette, or the
+  connector (`addCard("html", {html})` / spec `{kind:"html", html:"…"}`). `src/types.ts`,
+  `src/scene-spec.ts`, `src/connector.ts`, `src/excalidraw-helpers.ts`, `src/embeddables/cards.tsx`,
+  `src/components/HtmlEditorOverlay.tsx`, `src/App.tsx`, `src/styles.css`,
+  `excalidraw/packages/excalidraw/components/Actions.tsx` (fork edit — rebuilt). [MP-2.3]
+
+### Fixed
+- **Fork build: `packages/excalidraw`'s `tsc` declaration pass was scanning `node_modules`.** Its
+  `tsconfig.json` uses `rootDir: ".."` + `include: ["**/*"]` to emit cross-package types, but the
+  custom `exclude` list never re-added `node_modules` (supplying your own `exclude` drops
+  TypeScript's default one). That let stray workspace-symlinked package sources leak bogus `.d.ts`
+  files into the committed `dist/types`, and ballooned the file count enough to be genuinely slow
+  to rebuild. Added `"node_modules"` to the exclude list — no behavior change, just a correctly
+  scoped build. `excalidraw/packages/excalidraw/tsconfig.json`.
+
+## 4.2.0 — 2026-07-04
+
+### Deprecated
+- **Table card creation.** The table card is unmaintained and looks worse than a formatted note, so
+  every way to *create* one is gone (there was only one, and it wasn't even wired up) — Markdown notes
+  (which render GFM tables nicely) are the replacement. Old table cards still render and stay editable;
+  specs/API calls with `kind:"table"` are auto-converted to a note with a markdown table instead of
+  failing or being dropped. A new command-palette action, "Convert table card → note", rewrites an
+  existing legacy table card in place. `src/scene-spec.ts`, `src/connector.ts`, `src/boards.ts`
+  (`rowsToMarkdownTable`), `src/App.tsx`. [MP-1.2]
+
+### Added
+- **`tools/verify-connector.mjs`** — diagnoses a broken Claude/MCP connection (Access blocking vs. a
+  bad token vs. fully working) instead of a bare fetch error. **Per-token revoke:**
+  `DELETE /api/connect?id=<id>` revokes just one token by its `connectList` id; `DELETE /api/connect`
+  (no `id`) still revokes all. `worker/index.js`, `tools/verify-connector.mjs`. [MP-1.3]
+
+### Fixed
+- **Connector: `create_board` no longer gets clobbered, and no longer lands on the wrong board.**
+  Two bugs, one fix. The MCP server used to do a direct read-modify-write of the whole boards store
+  to create/switch boards — racing the open app's own autosave and silently deleting the new board.
+  And `draw` had no board target at all, so it always landed on whichever board tab happened to be
+  open, not the one just created. Now the app is the **only** writer of the boards store: `create_board`,
+  `set_active_board`, and `draw` all queue an **op** (`{ops:[...]}`, not a single overwritable slot) that
+  the app executes in order on its next focus/reload. `draw` gained `board_id` (target an existing
+  board) and `board_name` (create-and-draw in one call); `read_board` gained `board_id`. Old-style
+  bare-spec `POST /api/connect/draw` still works. `worker/index.js`, `tools/mcp-server.mjs`,
+  `src/App.tsx`, `src/api.ts`, `src/types.ts`. [MP-1.1]
+
 ## 4.1.0 — 2026-06-26
 
 A batch of P1 + P2 fixes from testing — colour/eyedropper/text correctness, frame-wrap theme, note

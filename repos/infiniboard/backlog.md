@@ -51,6 +51,7 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 - [ ] **P3 — Full Planner task-editor parity** — keep the task-card editor in sync with the Planner
       schema; ideally a shared component.
 - [ ] **P3 — Pin a board onto the Planner** (reverse cross-link), once both ship together.
+- [ ] **P2 - HTML Renderer** a card where we add code and when we close it renders hrml. this is so we can either let claude or Other AI make more better looking renders or for us to put some html directly on the board without any linking. i think we might be able to use the embed tool or its working to achieve this. also we need to have a switch like the raw markdown/formatted switch that we have on the ntoe card so we can see how its rendering.
 
 ## Media (images / video)
 
