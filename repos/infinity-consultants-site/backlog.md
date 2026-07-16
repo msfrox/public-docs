@@ -13,11 +13,22 @@ _Internal-only. Started 2026-06-12._
 - [x] **Production domain infin8.agency** wired in `wrangler.jsonc` (worker `infinity-site`,
       account "infinity"); `og:url` updated; `ic.gear.lk` test domain dropped. `Other sources/` gitignored.
 
+## Done — v1.3 content (2026-07-16)
+
+- [x] **Work populated:** TecRoot, Gearz, Reboot, Cykel. TecRoot/Gearz use real creative as
+      covers/galleries; Reboot/Cykel use generated cover cards (owner to supply real work later).
+- [x] **Feed populated:** 93 items (83 graphics + 10 videos) optimized to `/assets/media/feed/`.
+      Homepage shows a 5-item teaser (2 videos + 3 graphics); full grid at **`/feed/`**.
+- [x] Raw source `Media/` gitignored; only the ~54 MB optimized set is committed.
+
 ## Before go-live (owner actions)
 
-- [ ] **Populate content:** add real clients to `public/data/clients.json` (+ images under
-      `public/assets/clients/<id>/`) and real videos/images to `public/data/media.json`
-      (+ files in `public/assets/media/`). Sections stay hidden until you do. See `public/data/README.md`.
+- [ ] **Reboot & Cykel:** supply real logos + work so their case-study modals show actual
+      creative (currently a clean placeholder card + neutral copy). Add to `clients.json`.
+- [ ] **Feed captions (optional):** items currently have no captions; add per-item captions
+      in `media.json` if you want them on hover / in the lightbox.
+- [ ] **Media hosting (later):** the feed is ~54 MB committed to the repo. If it grows,
+      consider Cloudflare R2 / Images instead of committing binaries.
 - [ ] **Confirm the domain went live:** once `infin8.agency` is active on the "infinity"
       account and Workers Builds is connected to this repo, verify the push deployed
       (re-trigger the build if the first attempt ran before the zone existed).
