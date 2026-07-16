@@ -2,28 +2,32 @@
 
 _Internal-only. Started 2026-06-12._
 
-## In progress — design variant test (2026-06-12)
+## Done — v1.2 finalize (2026-07-16)
 
-Five monochrome design variants are deployed for the owner to compare:
-`/v1` Pulse (interactive dark) · `/v2` Editorial (paper white) · `/v3` Terminal
-(brutalist mono) · `/v4` Cinema (full-screen scenes) · `/v5` Studio (split panel).
-Root `/` is a chooser page (noindex).
-
-- [ ] **Owner picks the winning variant** (mixing elements allowed) → promote it to `/`,
-      delete the others + the chooser, restore proper `<title>`/OG tags.
-- [ ] WhatsApp number `94775569953` (found in other Infinity projects) is now used on all
-      variants — **owner to confirm** it's the right number for IC.
+- [x] **Variant picked: Pulse.** Promoted to `/`; Editorial/Terminal/Cinema/Studio + the
+      chooser removed. Proper `<title>`/OG tags restored.
+- [x] **Info** section reworked in the Cinema style (struck "post & pray" statement + ∞ watermark).
+- [x] **Process** section reworked as the Studio vertical timeline (dots light up on scroll).
+- [x] **Work** + **Feed** sections added — data-driven (`public/data/clients.json`,
+      `media.json`), auto-hide when empty. Decap/Sveltia CMS scaffolded (inactive) in `public/admin/`.
+- [x] **Production domain infin8.agency** wired in `wrangler.jsonc` (worker `infinity-site`,
+      account "infinity"); `og:url` updated; `ic.gear.lk` test domain dropped. `Other sources/` gitignored.
 
 ## Before go-live (owner actions)
 
+- [ ] **Populate content:** add real clients to `public/data/clients.json` (+ images under
+      `public/assets/clients/<id>/`) and real videos/images to `public/data/media.json`
+      (+ files in `public/assets/media/`). Sections stay hidden until you do. See `public/data/README.md`.
+- [ ] **Confirm the domain went live:** once `infin8.agency` is active on the "infinity"
+      account and Workers Builds is connected to this repo, verify the push deployed
+      (re-trigger the build if the first attempt ran before the zone existed).
+- [ ] **Old test worker:** if `ic.gear.lk` should stop serving, disable that route on the
+      OLD ("Shehan Feroze") account's `infinity-consultants` worker — not controlled from this repo.
 - [ ] **Replace placeholder contact details** in `public/index.html` (search `TODO(owner)`):
-      WhatsApp number, email address, phone number. Currently `+94 77 000 0000` /
-      `hello@infinityconsultants.lk` are placeholders.
-- [ ] **Decide production domain** (infinityconsultants.lk?) and update `wrangler.jsonc`
-      routes + `og:url` in `index.html` (see DEPLOY.md go-live checklist).
-- [ ] **Connect Workers Builds** to the GitHub repo so pushes auto-deploy
-      (dashboard step — see DEPLOY.md). Until then, deploys are manual `npx wrangler deploy`.
+      confirm WhatsApp number `94775569953`, email address, phone number.
 - [ ] **Add the content editor** as a GitHub collaborator on the private repo.
+- [ ] **(Optional) Activate the visual CMS:** wire a GitHub OAuth backend for `public/admin/`
+      (Sveltia recommended for Cloudflare) so non-devs manage Clients/Feed via a form UI.
 
 ## Ideas / later
 
