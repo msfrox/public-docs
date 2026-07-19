@@ -218,7 +218,7 @@ to drive the actual tasks (e.g. into ClickUp via the content-calendar skill).
   copy/paste across boards and export/import.
 - **Paste an image** with `Ctrl/Cmd+V` to drop it straight on the board (single copy, auto-uploaded).
 - **Library** (the panel on the right) — your saved/custom stencils now **persist** across reloads.
-- Big boards stay snappy because heavy tooling (Mermaid/diagram libs) loads only when used; media is
-  offloaded to storage automatically.
+- Big boards stay snappy because heavy tooling (the rich-text note editor and syntax libs) loads only
+  when used; media is offloaded to storage automatically.
 - On mobile, the same tools live in the bottom island and the "more tools" menu; the minimap moves to
   the top-right.

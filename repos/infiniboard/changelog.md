@@ -5,7 +5,22 @@ release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
 
 ## Unreleased
 
+## 4.5.0 — 2026-07-19
+
+Rolls up **Phase 2** polish (exports render card content, card-content undo verified + deletion-undo
+fix, HTML renderer card), the **Phase 3.1** bundle diet (Mermaid / Text-to-Diagram dropped), and the
+**Phase 5B** quick wins (styled token/URL dialogs, board-manager sort, command-palette sweep).
+Verified live on `wrangler dev --local` (2026-07-19): build green; HTML + note cards create, render,
+and **persist across reload**; connector Bearer-token auth; board-manager sort; styled token dialog.
+Not yet shipped from Phase 2: image placement (2.4) and the web-embed first-link race (2.5).
+
 ### Added
+- **Styled dialogs replace `window.prompt`.** The connector-token reveal (Menu → *Connect to
+  Claude*) now opens a proper dialog — a read-only token field, a **Copy** button, and a pointer to
+  `AI-CONNECTOR.md` — instead of a raw browser prompt that couldn't be copied cleanly on mobile.
+  Link-card and YouTube-card URL entry (both **insert** and **change URL**) use the same styled
+  single-line dialog. New `TokenDialog` + reusable `PromptDialog` (Promise-based `askText` helper).
+  `src/components/Dialogs.tsx`, `src/App.tsx`. [MP-5B]
 - **HTML renderer card.** A new card kind (`"html"`) that renders pasted/written HTML live in a
   sandboxed iframe (`sandbox="allow-scripts"` only — scripts run but can't read cookies/storage or
   reach the parent origin). A toggle on the card chrome switches between the rendered view and the
@@ -15,8 +30,35 @@ release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
   `src/scene-spec.ts`, `src/connector.ts`, `src/excalidraw-helpers.ts`, `src/embeddables/cards.tsx`,
   `src/components/HtmlEditorOverlay.tsx`, `src/App.tsx`, `src/styles.css`,
   `excalidraw/packages/excalidraw/components/Actions.tsx` (fork edit — rebuilt). [MP-2.3]
+- **Exports render real card content.** PNG/SVG export and copy-as-image now rasterize each
+  note/task/timer/link card into the image instead of showing the placeholder link. Cards render
+  offscreen (`html-to-image`, theme-aware, cached by card id + `_rev` + theme) and are swapped for
+  `image` elements at export time via a new optional `mapElementsForExport` prop, hooked at the fork's
+  single `data/index.ts` `exportCanvas` choke point (covers PNG/SVG file export **and** copy-as-PNG)
+  plus the export-dialog preview. `.excalidraw` JSON export and PNG scene-embeds still round-trip real
+  cards (only the rendered pixels are swapped). Known limits: iframe/media cards (youtube/video/html)
+  export a titled placeholder (cross-origin), and fonts fall back to system-sans. `src/export-cards.ts`,
+  `excalidraw/packages/excalidraw/data/index.ts`, `.../components/ImageExportDialog.tsx`, `.../types.ts`
+  (fork edit — rebuilt). [MP-2.1]
+
+### Changed
+- **Board manager: sort control.** The Manage-boards dialog gains a sort dropdown next to the
+  existing name/#tag filter — **Recently updated** (default), **Recently created**, or **Name (A–Z)**
+  — applied to the active, archived, and bin groups. Timestamp parsing is tolerant (ISO/date/numeric).
+  `src/components/BoardManager.tsx`. [MP-5B]
+- **Command-palette coverage + naming sweep.** Added the two menu actions that were missing from the
+  palette — *Board: Import diagram (Claude)* and *Board: Connect to Claude (token)* — and normalized
+  every entry to a consistent `Group: Action` prefix (`Insert:` / `Tool:` / `View:` / `Edit:` /
+  `AI:` / `Planner:` / `Board:`), so a single search term surfaces related commands. `src/App.tsx`.
+  [MP-5B]
 
 ### Fixed
+- **Card-deletion undo restores the card.** Undoing a card deletion left the element back but its
+  `board.cards` entry pruned, so the card rendered an empty placeholder; `onChange` now rehydrates the
+  store entry from `element.customData.card` when the id reappears. Card-content undo coverage was
+  verified across note/task/timer/link/html via a matrix in SMOKE.md — task-card edits (they write to
+  the Planner store, outside scene history) and timer start/stop (volatile) are documented exemptions
+  (Decision Log D-6). `src/App.tsx`. [MP-2.2]
 - **Fork build: `packages/excalidraw`'s `tsc` declaration pass was scanning `node_modules`.** Its
   `tsconfig.json` uses `rootDir: ".."` + `include: ["**/*"]` to emit cross-package types, but the
   custom `exclude` list never re-added `node_modules` (supplying your own `exclude` drops
@@ -24,6 +66,24 @@ release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
   files into the committed `dist/types`, and ballooned the file count enough to be genuinely slow
   to rebuild. Added `"node_modules"` to the exclude list — no behavior change, just a correctly
   scoped build. `excalidraw/packages/excalidraw/tsconfig.json`.
+
+### Removed
+- **Mermaid / Text-to-Diagram tool.** *What it did:* Excalidraw's built-in "Text to Diagram" dialog
+  had two tabs — **Mermaid → Excalidraw** (paste [Mermaid](https://mermaid.js.org) syntax — flowcharts,
+  sequence/class/ER/gantt/gitgraph/etc. — and convert it into editable Excalidraw shapes) and
+  **Text-to-Diagram** (an LLM turned a prose prompt into Mermaid, then converted it). Both ran through
+  `@excalidraw/mermaid-to-excalidraw`. *Why dropped (MASTER_PLAN D-1):* a bundle-visualizer audit
+  (2026-07-10) found its `mermaid` core sat in the **eager initial-load** path (~540 KB on disk), plus
+  ~2.7 MB of lazy diagram-renderer chunks (cytoscape, katex, dagre, all the `*Diagram` chunks) and a
+  high-severity `lodash` advisory — and the **Claude connector supersedes it** for diagram generation
+  (ask Claude to draw straight onto the board via MCP). *Impact:* eager JS 2.35 MB -> 1.81 MB; total
+  `dist` 24 MB -> 21 MB; no other feature affected (katex was Mermaid-only; note cards use `marked`,
+  not katex). *How:* an app-side Vite `resolve.alias` swaps the package for a zero-dependency stub
+  (`src/stubs/mermaid-to-excalidraw.ts`) at bundle time — **no fork edit**, so upstream subtree pulls
+  stay clean. The dialog's menu/command entry points still exist in the vendored fork and now surface
+  a graceful "removed" message; removing those dead entries is a small queued fork follow-up.
+  **To restore Mermaid:** delete the stub + the alias in `vite.config.ts` and rebuild (see HANDOFF.md
+  -> "Mermaid drop / restoring it"). `vite.config.ts`, `src/stubs/mermaid-to-excalidraw.ts`. [MP-3.1]
 
 ## 4.2.0 — 2026-07-04
 

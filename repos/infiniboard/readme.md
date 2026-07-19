@@ -130,10 +130,12 @@ sync backend), exact R2 usage stats, full Planner task-editor parity, minimap.
 
 ## Version history
 
-Full notes per release are in **[CHANGELOG.md](CHANGELOG.md)**. Current: **4.2.0** (2026-07-04) —
-connector **board targeting** (create_board/draw land on the right board via an ops queue, no more
-clobbering), **table card deprecated** (Markdown notes replace it; legacy tables still render),
-`verify-connector.mjs` + per-token revoke. Prior: **4.1.0** — colour/eyedropper/text fixes, frame-wrap
+Full notes per release are in **[CHANGELOG.md](CHANGELOG.md)**. Current: **4.5.0** (2026-07-19) —
+exports **render card content** (rasterized), **card-content undo** verified + deletion-undo fix,
+**HTML renderer card**, the **bundle diet** (Mermaid / Text-to-Diagram dropped: eager JS 2.35→1.81 MB,
+dist 24→21 MB), and **5B quick wins** (styled token/URL dialogs, board-manager sort, command-palette
+sweep). Prior: **4.2.0** (2026-07-04) — connector **board targeting** (ops queue) + **table card
+deprecated** + `verify-connector.mjs` / per-token revoke. **4.1.0** — colour/eyedropper/text fixes, frame-wrap
 theme, transparency control, reset-to-natural-size, Cloudflare-Access connector support. **4.0.0** —
 the **Board ⇄ Claude connector** (live MCP sync + scene-spec + `window.infiniboard` + Import diagram +
 the `infiniboard-board` skill), separate shape **Text** colour, card-content **undo**, scene-portable

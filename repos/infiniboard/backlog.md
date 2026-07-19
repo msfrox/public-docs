@@ -98,8 +98,11 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 
 ## Performance / responsiveness / security (follow-ups to the 3.0 pass)
 
-- [ ] **Perf / bundle.** Large chunks (Mermaid/KaTeX/Cytoscape/CodeMirror) are lazy-loaded; dropping
-      Mermaid would shed several hundred KB + the lodash advisory. Audit committed-`dist` vs building in CI.
+- [x] **Perf / bundle — Mermaid dropped (MP-3.1, 2026-07-10).** Removed Mermaid/Text-to-Diagram via an
+      app-side stub alias: eager JS 2.35 MB -> 1.81 MB, `dist` 24 MB -> 21 MB, and the KaTeX/Cytoscape/
+      dagre chunks + the `lodash` advisory went with it. Remaining bundle follow-ups: font double-ship
+      (Xiaolai = 209 woff2 files ship + base64-embedded in `subset-shared`), and removing the now-dead
+      Mermaid UI entry points (fork edit). See CHANGELOG "Removed" + HANDOFF "Mermaid drop".
 - [ ] **Responsiveness.** Verify a real installed iPhone PWA (black-bar rework, 2.6.0); test popovers/
       dialogs at very small Android widths and embeddable-card touch interactions.
 - [ ] **Security follow-ups.** Decide whether to scope `GET /api/files/<key>` (signed/short-lived or
