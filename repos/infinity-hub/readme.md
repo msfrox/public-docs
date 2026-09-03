@@ -20,14 +20,11 @@ Built with [Astro + Starlight](https://starlight.astro.build/), deployed to **[h
 ## Quick start
 
 ```bash
-npm install       # install dependencies (re-run if OneDrive locks a file mid-install)
+npm install       # install dependencies
 npm run dev       # dev server at http://localhost:4321
 npm run build     # production build → /dist
 npm run preview   # serve the built /dist locally
 ```
-
-> **OneDrive note:** `node_modules/` and `dist/` are gitignored and never synced.  
-> If `npm install` fails with `ENOTEMPTY` / `EPERM`, just run it again — it resumes.
 
 ---
 
