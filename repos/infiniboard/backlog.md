@@ -32,8 +32,15 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 - [ ] **P2 — Real-time multi-user collaboration.** A Cloudflare **Durable Object** per board (WebSocket)
       reconciling Excalidraw elements; reuse the Access JWT for auth. Composes with the connector token.
       Biggest remaining backend item.
-- [ ] **P3 — `tools/` CLI to emit a spec/`.excalidraw` from outside the app** (pure Node port of
-      `scene-spec.ts`) so Cowork can write a file without the app open.
+- [x] **P3 — `tools/` CLI to emit a spec/`.excalidraw` from outside the app** (2026-09-19).
+      `tools/spec-to-excalidraw.mjs spec.json -o board.excalidraw` — a real Node port that runs the
+      app's actual converter (`convertToExcalidrawElements` + `restoreElements`, not a
+      reimplementation), routing around the Cloudflare-Access-blocked P1 connector above. Emits cards
+      too (`customData.card`). Round-trip verified live (`wrangler dev --local` + `playwright-remote`):
+      loaded, rendered, and **persisted across a reload**, note card included. See
+      [AI-CONNECTOR.md](AI-CONNECTOR.md) §2b and the header comment in `tools/spec-to-excalidraw.mjs`
+      for the format, the one known limitation (approximate text width, no browser canvas available),
+      and `tools/build-vendor.mjs` for how the two vendored modules are built.
 - [ ] **P3 — GitHub connector.** Put GitHub Markdown docs on the board (TipTap render; two-way sync?).
       Vision: edit a repo's BACKLOG/README from the board. Needs private-repo access; public-doc
       workaround exists (docsify-this.net over raw.githubusercontent.com).

@@ -80,11 +80,6 @@ Paste/insert any `https://` URL as an **embeddable** to show a live site in a fr
 "Edit link" or Ctrl+K to set/change the URL). Sites that block framing (`X-Frame-Options`/CSP) won't
 load — that's the remote site's choice.
 
-> **Note:** when you draw an *empty* web-embed and set its URL for the very first time, it can stay
-> blank until you open "Edit link" once more and confirm — the second time sticks. (A known timing
-> quirk; a one-line re-entry is the workaround for now.) Pasting a URL straight onto the canvas — which
-> makes a richer **Link** card — avoids it entirely.
-
 ---
 
 ## Styling — the properties panel
