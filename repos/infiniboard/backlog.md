@@ -3,6 +3,14 @@
 **Pending work only.** Shipped work lives in [CHANGELOG.md](CHANGELOG.md). Spun out of the Infinity Hub
 backlog (the `Whiteboard` section) on 2026-06-18.
 
+**Status ownership (2026-09-19):** this file is pre-phase ideas — things nobody has scheduled yet.
+Once an item becomes a task in [MASTER_PLAN.md](MASTER_PLAN.md) (gets an `MP-x.y` number),
+**MASTER_PLAN.md §1 (Status Board) is the single authoritative tracker** for its status, not this
+file. When that task ships, delete the matching line here in the same commit (Phase 6's release
+protocol already says this) — don't leave it checked off or struck through. A `[ ]` here that
+matches a `[x]` in MASTER_PLAN.md is a bug in this file; trust the code and MASTER_PLAN over this
+list. (Found 2026-09-19: three items below had drifted exactly this way — removed.)
+
 **Cross-cutting rule (like the hub): mobile-first + fast.** Prefer doing things *natively* — edit the
 fork (slots, element fields, the properties panel) or reuse Excalidraw's own UI rather than bolting on
 parallel components. Anything under `excalidraw/` needs `npm run fork:build` (see [MAINTAINING.md](MAINTAINING.md)).
@@ -38,12 +46,6 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
       z-order — 4.1.0.) Only true fix = render cards as canvas bitmaps (rasterize) interleaved at the right
       z, with a live-overlay/snapshot hybrid for interactivity. Multi-day; shares its core with the export
       item below. Document + revisit.
-- [ ] **P2 — Export / copy-as-image renders cards as the placeholder URL, not their content.** Same root
-      cause as z-order: cards are DOM, Excalidraw only rasterizes canvas. Fix: on export, rasterize each
-      card's DOM (`html-to-image`) and composite at its rect (or swap in an image element during export).
-- [ ] **P2 — Undo for card *content* (note text / table cells / timer).** 4.0 added board-level undo via a
-      `customData` history checkpoint; verify it covers all card kinds and that note-content reverts at
-      *edit-session* granularity (on editor close), guarding against reverting mid-edit.
 - [ ] **P3 — Drop the dual storage of card data** (`board.cards` + `element.customData.card`). Make
       `customData` the source of truth, derive `board.cards` as a cache; shrinks the saved D1 blob.
 - [ ] **P3 — Task card ⇄ Planner: undo + delete.** Undo changes pushed to the Planner via a task card;
@@ -51,7 +53,6 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 - [ ] **P3 — Full Planner task-editor parity** — keep the task-card editor in sync with the Planner
       schema; ideally a shared component.
 - [ ] **P3 — Pin a board onto the Planner** (reverse cross-link), once both ship together.
-- [ ] **P2 - HTML Renderer** a card where we add code and when we close it renders hrml. this is so we can either let claude or Other AI make more better looking renders or for us to put some html directly on the board without any linking. i think we might be able to use the embed tool or its working to achieve this. also we need to have a switch like the raw markdown/formatted switch that we have on the ntoe card so we can see how its rendering.
 
 ## Media (images / video)
 
@@ -107,7 +108,9 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
       dialogs at very small Android widths and embeddable-card touch interactions.
 - [ ] **Security follow-ups.** Decide whether to scope `GET /api/files/<key>` (signed/short-lived or
       share-token-gated) vs public-by-opaque-key. Consider a CSP (tricky with Excalidraw blob/worker/inline).
-- [ ] **General.** Offline / service-worker story; a written smoke-test checklist.
+- [ ] **General.** Offline / service-worker story (D-3, undecided). (The "written smoke-test
+      checklist" half of this line shipped as [SMOKE.md](SMOKE.md), Phase 0.3, 2026-07-04 — removed
+      from here.)
 
 ---
 
