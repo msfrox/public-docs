@@ -1,10 +1,14 @@
+---
+title: Infiniboard — Backlog
+repo: infiniboard
+---
 # Infiniboard — Backlog
 
-**Pending work only.** Shipped work lives in [CHANGELOG.md](CHANGELOG.md). Spun out of the Infinity Hub
+**Pending work only.** Shipped work lives in [CHANGELOG.md](changelog.md). Spun out of the Infinity Hub
 backlog (the `Whiteboard` section) on 2026-06-18.
 
 **Status ownership (2026-09-19):** this file is pre-phase ideas — things nobody has scheduled yet.
-Once an item becomes a task in [MASTER_PLAN.md](MASTER_PLAN.md) (gets an `MP-x.y` number),
+Once an item becomes a task in [MASTER_PLAN.md](https://github.com/msfrox/infiniboard/blob/main/MASTER_PLAN.md) (gets an `MP-x.y` number),
 **MASTER_PLAN.md §1 (Status Board) is the single authoritative tracker** for its status, not this
 file. When that task ships, delete the matching line here in the same commit (Phase 6's release
 protocol already says this) — don't leave it checked off or struck through. A `[ ]` here that
@@ -13,7 +17,7 @@ list. (Found 2026-09-19: three items below had drifted exactly this way — remo
 
 **Cross-cutting rule (like the hub): mobile-first + fast.** Prefer doing things *natively* — edit the
 fork (slots, element fields, the properties panel) or reuse Excalidraw's own UI rather than bolting on
-parallel components. Anything under `excalidraw/` needs `npm run fork:build` (see [MAINTAINING.md](MAINTAINING.md)).
+parallel components. Anything under `excalidraw/` needs `npm run fork:build` (see [MAINTAINING.md](https://github.com/msfrox/infiniboard/blob/main/MAINTAINING.md)).
 
 Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday.
 
@@ -28,7 +32,7 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
       Fix (pick one, in the Zero Trust dashboard): **(a)** create an Access **service token** and a Service
       Auth policy on the board.gear.lk app — the MCP server already sends `CF_ACCESS_CLIENT_ID/SECRET`
       when set; or **(b)** an Access **Bypass** policy for `/api/connect*` + the token-authed `/api/data*`
-      (safe — the Worker authenticates those itself). Full steps in [AI-CONNECTOR.md](AI-CONNECTOR.md) §4.
+      (safe — the Worker authenticates those itself). Full steps in [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md) §4.
 - [ ] **P2 — Real-time multi-user collaboration.** A Cloudflare **Durable Object** per board (WebSocket)
       reconciling Excalidraw elements; reuse the Access JWT for auth. Composes with the connector token.
       Biggest remaining backend item.
@@ -38,7 +42,7 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
       reimplementation), routing around the Cloudflare-Access-blocked P1 connector above. Emits cards
       too (`customData.card`). Round-trip verified live (`wrangler dev --local` + `playwright-remote`):
       loaded, rendered, and **persisted across a reload**, note card included. See
-      [AI-CONNECTOR.md](AI-CONNECTOR.md) §2b and the header comment in `tools/spec-to-excalidraw.mjs`
+      [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md) §2b and the header comment in `tools/spec-to-excalidraw.mjs`
       for the format, the one known limitation (approximate text width, no browser canvas available),
       and `tools/build-vendor.mjs` for how the two vendored modules are built.
 - [ ] **P3 — GitHub connector.** Put GitHub Markdown docs on the board (TipTap render; two-way sync?).
@@ -116,7 +120,7 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 - [ ] **Security follow-ups.** Decide whether to scope `GET /api/files/<key>` (signed/short-lived or
       share-token-gated) vs public-by-opaque-key. Consider a CSP (tricky with Excalidraw blob/worker/inline).
 - [ ] **General.** Offline / service-worker story (D-3, undecided). (The "written smoke-test
-      checklist" half of this line shipped as [SMOKE.md](SMOKE.md), Phase 0.3, 2026-07-04 — removed
+      checklist" half of this line shipped as [SMOKE.md](https://github.com/msfrox/infiniboard/blob/main/SMOKE.md), Phase 0.3, 2026-07-04 — removed
       from here.)
 
 ---
@@ -124,7 +128,7 @@ Priority: **P1** = next up · **P2** = wanted · **P3** = nice-to-have / someday
 ## Reference notes
 
 - **Production secrets: none** — Access JWT verified against public JWKS; `ACCESS_*` / `BOOTSTRAP_ADMINS`
-  are non-secret config. `ALLOW_DEV_AUTH` / `DEV_EMAIL` are local-only (`.dev.vars`). See [DEPLOY.md](DEPLOY.md).
+  are non-secret config. `ALLOW_DEV_AUTH` / `DEV_EMAIL` are local-only (`.dev.vars`). See [DEPLOY.md](https://github.com/msfrox/infiniboard/blob/main/DEPLOY.md).
 - **Connector token** (`ibk_…`) is held by the user; only its SHA-256 hash is stored. Revoke all via
   `DELETE /api/connect`. The token alone can't reach the live Worker until Access is configured (top item).
 - **Public file reads** (`GET /api/files/<key>`) are unauthenticated so shared boards render media.

@@ -1,3 +1,7 @@
+---
+title: Infinity Consultants — Website
+repo: infinity-consultants-site
+---
 # Infinity Consultants — Website
 
 Public marketing website for **Infinity Consultants** — strategy-first digital marketing.
@@ -23,7 +27,7 @@ Everything lives in `public/`:
 | `public/admin/` | Scaffolded visual CMS (inactive — needs GitHub OAuth to turn on) |
 
 To change wording, prices, or packages: edit `public/index.html`, commit, push to `main`.
-To add clients or feed media: edit the JSON in `public/data/` (see **[data/README.md](public/data/README.md)**).
+To add clients or feed media: edit the JSON in `public/data/` (see **[data/README.md](https://github.com/msfrox/infinity-consultants-site/blob/main/public/data/README.md)**).
 The site deploys automatically — no Cloudflare access needed.
 
 ### Conventions
@@ -50,7 +54,7 @@ Pushes to `main` auto-deploy (Workers Builds). Manual deploy:
 npx wrangler deploy
 ```
 
-See [DEPLOY.md](DEPLOY.md) for the full setup and the go-live checklist.
+See [DEPLOY.md](https://github.com/msfrox/infinity-consultants-site/blob/main/DEPLOY.md) for the full setup and the go-live checklist.
 
 ---
 

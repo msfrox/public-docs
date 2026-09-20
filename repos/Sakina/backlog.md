@@ -1,9 +1,13 @@
+---
+title: Sakina — Backlog / pending work
+repo: Sakina
+---
 # Sakina — Backlog / pending work
 
 Living list of what's pending so anyone (you or Claude) can pick up cold. Newest
 context at top of each item. Mark `[x]` when shipped and move to "Done" with the
 version it shipped in. Keep this in sync with the Version history table in
-[`README.md`](./README.md).
+[`README.md`](readme.md).
 
 ## In progress
 

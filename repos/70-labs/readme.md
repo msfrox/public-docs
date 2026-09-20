@@ -1,3 +1,7 @@
+---
+title: 70 Labs
+repo: 70-labs
+---
 # 70 Labs
 
 A hub of **10 wild, edge-native mini-apps** on a single Cloudflare Worker — built to learn

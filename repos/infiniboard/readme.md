@@ -1,3 +1,7 @@
+---
+title: Infiniboard
+repo: infiniboard
+---
 # Infiniboard
 
 Infinity Media's infinite whiteboard — **built on [Excalidraw](https://github.com/excalidraw/excalidraw)**,
@@ -46,7 +50,7 @@ npx wrangler d1 execute infinity-hub-authz --local --file=../infinity-hub/worker
 npx wrangler d1 execute infinity-hub-authz --local --file=./worker/schema-additions.sql
 ```
 
-See [DEPLOY.md](DEPLOY.md) for production (custom domain, Access, public-share bypass, grants).
+See [DEPLOY.md](https://github.com/msfrox/infiniboard/blob/main/DEPLOY.md) for production (custom domain, Access, public-share bypass, grants).
 
 ## Working on the fork
 
@@ -79,7 +83,7 @@ Our fork edits so far:
 - (Earlier) a `ToolbarCustomToolsTunnel` host slot + exported `<ToolbarCustomTools>`.
 
 Next planned fork edit: **frame background fill + opacity** (renderer in `packages/element` + the
-properties panel in `packages/excalidraw/components/Actions.tsx`). See [BACKLOG.md](BACKLOG.md).
+properties panel in `packages/excalidraw/components/Actions.tsx`). See [BACKLOG.md](backlog.md).
 
 ## Project layout
 
@@ -115,22 +119,22 @@ flyout, eraser, marquee select, group/align, mobile pinch-zoom.
 **New in Infiniboard:** board manager (tags, archive, 30-day bin with restore/purge), public
 read-only **share links** (live — always show the latest version).
 
-**Known gaps / next (see [BACKLOG.md](BACKLOG.md)):** real-time multi-user collaboration (needs a
+**Known gaps / next (see [BACKLOG.md](backlog.md)):** real-time multi-user collaboration (needs a
 sync backend), exact R2 usage stats, full Planner task-editor parity, minimap.
 
 ## Documentation
 
-- **[GUIDE.md](GUIDE.md)** — master usage guide: every tool, the settings, and recipes (mindmaps,
+- **[GUIDE.md](guide.md)** — master usage guide: every tool, the settings, and recipes (mindmaps,
   flowcharts, system diagrams, plans). Start here to *use* the board.
-- **[AI-CONNECTOR.md](AI-CONNECTOR.md)** — read/draw the board with Claude (scene-spec builder,
+- **[AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md)** — read/draw the board with Claude (scene-spec builder,
   `window.infiniboard` bridge, the file round-trip, and the Phase-2 live-sync plan).
-- **[MAINTAINING.md](MAINTAINING.md)** — plain-English owner's guide. **[HANDOFF.md](HANDOFF.md)** —
-  engineering orientation. **[DEPLOY.md](DEPLOY.md)** — production + the build/commit model.
-- **[BACKLOG.md](BACKLOG.md)** — what's next. **[CHANGELOG.md](CHANGELOG.md)** — per-release notes.
+- **[MAINTAINING.md](https://github.com/msfrox/infiniboard/blob/main/MAINTAINING.md)** — plain-English owner's guide. **[HANDOFF.md](https://github.com/msfrox/infiniboard/blob/main/HANDOFF.md)** —
+  engineering orientation. **[DEPLOY.md](https://github.com/msfrox/infiniboard/blob/main/DEPLOY.md)** — production + the build/commit model.
+- **[BACKLOG.md](backlog.md)** — what's next. **[CHANGELOG.md](changelog.md)** — per-release notes.
 
 ## Version history
 
-Full notes per release are in **[CHANGELOG.md](CHANGELOG.md)**. Current: **4.5.0** (2026-07-19) —
+Full notes per release are in **[CHANGELOG.md](changelog.md)**. Current: **4.5.0** (2026-07-19) —
 exports **render card content** (rasterized), **card-content undo** verified + deletion-undo fix,
 **HTML renderer card**, the **bundle diet** (Mermaid / Text-to-Diagram dropped: eager JS 2.35→1.81 MB,
 dist 24→21 MB), and **5B quick wins** (styled token/URL dialogs, board-manager sort, command-palette

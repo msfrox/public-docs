@@ -1,0 +1,38 @@
+name: Normalize mirrored docs
+
+# Each source repo's own sync-docs.yml does a plain `rm -rf + cp` into
+# repos/<name>/, which wipes any front matter or link fixes on every push.
+# This workflow re-derives them here, in this repo, right after any such
+# push lands -- so the fix survives the next sync instead of being clobbered
+# by it. See scripts/normalize_mirrors.py for what it actually does.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "repos/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Normalize mirrored docs
+        run: python3 scripts/normalize_mirrors.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "docs-normalize-bot"
+          git config user.email "docs-normalize-bot@users.noreply.github.com"
+          git add repos/ index.md
+          if git diff --cached --quiet; then
+            echo "Nothing to normalize."
+          else
+            git commit -m "Normalize mirrored links and front matter"
+            git push
+          fi

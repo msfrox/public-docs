@@ -1,3 +1,7 @@
+---
+title: Sri Lanka Prayer Times — ACJU Official Timetable
+repo: Prayer-Time-Site
+---
 # Sri Lanka Prayer Times — ACJU Official Timetable
 
 A fast, free, ad-light web app for accurate Islamic prayer times across **every
@@ -338,7 +342,7 @@ is replaced at deploy time; the file in the repo always shows the placeholder.
 ## License
 
 **Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International
-(CC BY-NC-SA 4.0)** — see [LICENSE](LICENSE).
+(CC BY-NC-SA 4.0)** — see [LICENSE](https://github.com/msfrox/Prayer-Time-Site/blob/main/LICENSE).
 
 You are free to **use, study, share, and build on** this project for **any
 non-commercial purpose**, provided you:
