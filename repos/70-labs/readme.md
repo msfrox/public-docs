@@ -19,6 +19,7 @@ the newest web/AI tech *and* to actually get work done for Infinity Media & its 
 | 9 | AI Vision | `/apps/vision/` | Llama Vision (Workers AI) |
 | 10 | Voice Notes | `/apps/voice/` | Whisper + Llama + MeloTTS |
 | 11 | Coach | `/apps/coach/` | AI fitness coach · Workers AI + offline-first localStorage (planned to spin out into its own app) |
+| 12 | SL Delivery Cost | `/apps/delivery/` | client-only, editable rates |
 
 ## Architecture
 - **One Worker.** `public/` is served as static assets (fast, cached). Only `/api/*` runs the Worker.

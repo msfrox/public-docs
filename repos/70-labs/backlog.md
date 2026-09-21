@@ -32,7 +32,7 @@ Legend: ⭐ = strong next pick · 🧪 = mostly a tech-learning vehicle · 💼 
 17. ⭐🧪 **Realtime Whiteboard** — multiplayer drawing room. *Durable Objects + Canvas + CRDT-lite.*
 18. ⭐💼 **Hashtag Lab** — niche hashtag sets + reach tiers for SL cycling/tech. *Workers AI + curated lists.*
 19. ⭐🧪 **AI Background Remover** — cut out product from photo, on-device. *Transformers.js / WebGPU (RMBG model).*
-20. ⭐💼 **SL Delivery Cost** — courier price calculator (Pronto/Koombiyo/Domex) by district/weight. *client.*
+20. ✅ ⭐💼 **SL Delivery Cost** — courier price calculator (Pronto/Koombiyo/Domex) by district/weight. *client.* Shipped `/apps/delivery/` — default rates are clearly-labelled placeholders, editable in-app (saved to localStorage).
 
 ## 💼 Work / agency utilities
 21. UTM Library — saved campaigns in KV, team-shareable.
