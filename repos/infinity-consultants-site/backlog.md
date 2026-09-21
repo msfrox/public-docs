@@ -1,3 +1,7 @@
+---
+title: Infinity Consultants site — Backlog
+repo: infinity-consultants-site
+---
 # Infinity Consultants site — Backlog
 
 _Internal-only. Started 2026-06-12._

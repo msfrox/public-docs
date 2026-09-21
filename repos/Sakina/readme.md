@@ -1,3 +1,7 @@
+---
+title: Sakina — Free Sri Lankan Muslim Matrimony
+repo: Sakina
+---
 # Sakina — Free Sri Lankan Muslim Matrimony
 
 A **free**, private, halal matrimony service for the Sri Lankan Muslim community.
@@ -8,8 +12,8 @@ No fees, no photos stored, contact shared only when both sides agree.
 a final palette is being chosen.
 
 > This README is the project handover document — architecture, how it works, how to
-> run/deploy it, and the version history. **Pending work lives in [`BACKLOG.md`](./BACKLOG.md);**
-> deployment specifics are in [`DEPLOY.md`](./DEPLOY.md).
+> run/deploy it, and the version history. **Pending work lives in [`BACKLOG.md`](backlog.md);**
+> deployment specifics are in [`DEPLOY.md`](https://github.com/msfrox/Sakina/blob/master/DEPLOY.md).
 
 ---
 
@@ -138,7 +142,7 @@ First admin: any number listed in `ADMIN_PHONES` is auto-granted admin on login.
 
 ## Deploying
 
-See [`DEPLOY.md`](./DEPLOY.md). Summary: set prod secrets via `wrangler secret put`,
+See [`DEPLOY.md`](https://github.com/msfrox/Sakina/blob/master/DEPLOY.md). Summary: set prod secrets via `wrangler secret put`,
 `npm run db:migrate:prod`, `npm run deploy`. The custom domain `sakina.lk` is bound
 via `wrangler.jsonc` routes.
 
@@ -297,7 +301,7 @@ Service-worker cache busting is automatic (vite-plugin-pwa content hashing).
 | **v1.8.0** | *Admin moderation + profile numbering + contact-leak guard.* **Requires migration `0004`** (`npm run db:migrate` + `db:migrate:prod`). New **"All profiles"** admin tab (every status) and a **"View profile"** button on the queue → a full-detail modal so admins can vet content. **Ban now asks for a reason** (stored on the account + audit + blacklist; shown to admins; client-facing delivery deferred — see BACKLOG). **Profile numbering**: each profile gets a human-friendly **`YYMM-NNN`** id (sequence resets monthly, so the running total isn't exposed) via a new `seq_counters` table, shown on admin cards/detail. **Contact-leak guard**: profiles with a phone-number-like string in free-text (about / family / custom fields) are **rejected on submit** (server + client), with a translated hint — keeps contact behind the mutual-accept gate. Admin stays English; member-facing strings translated (EN/Ta/Si). |
 | **v1.7.0** | *How-to-use guide.* New public **`/guide`** page: a getting-started walkthrough, **best-practices tips** for better results, a staying-safe note, and a CTA — fully translated (EN/Tamil/Sinhala). Linked from the landing top-bar + footer and the Settings “Need help?” card. |
 | **v1.6.0** | *Multilingual — all client-facing pages.* Completed Tamil + Sinhala across the remaining member pages: **ProfileForm** (incl. wali nudge), **Browse** (filters/cards), **ProfileView** (interest/match/reveal, report dialog), **Requests** (tabs/actions), plus shared **marital-status / gender / contact-label** constants. **Admin stays English by decision** (admins read English). All client copy now flows through `src/i18n/` with English fallback. Tamil/Sinhala still **pending native-speaker review**. |
-| **v1.5.0** | *Multilingual (Tamil + Sinhala) — foundation + onboarding.* Added a lightweight, dependency-free **i18n** system (`src/i18n/`): English is bundled as the source of truth; **Tamil (`ta`) and Sinhala (`si`) are code-split** and lazy-loaded only when selected (~2.8 KB gz each), so English users pay ~0 extra. A **language toggle** lives in the top bar (choice persisted in `localStorage`, `<html lang>` kept in sync, missing keys fall back to English). Translated so far: **Landing, Auth/OTP, Dashboard (incl. on-hold/appeal), Settings, Privacy, 404**. Remaining pages (ProfileForm, Browse, ProfileView, Requests, Admin) fall back to English and are tracked in [`BACKLOG.md`](./BACKLOG.md). Tamil/Sinhala strings are AI-drafted **pending native-speaker review**. |
+| **v1.5.0** | *Multilingual (Tamil + Sinhala) — foundation + onboarding.* Added a lightweight, dependency-free **i18n** system (`src/i18n/`): English is bundled as the source of truth; **Tamil (`ta`) and Sinhala (`si`) are code-split** and lazy-loaded only when selected (~2.8 KB gz each), so English users pay ~0 extra. A **language toggle** lives in the top bar (choice persisted in `localStorage`, `<html lang>` kept in sync, missing keys fall back to English). Translated so far: **Landing, Auth/OTP, Dashboard (incl. on-hold/appeal), Settings, Privacy, 404**. Remaining pages (ProfileForm, Browse, ProfileView, Requests, Admin) fall back to English and are tracked in [`BACKLOG.md`](backlog.md). Tamil/Sinhala strings are AI-drafted **pending native-speaker review**. |
 | **v1.4.0** | *Bug fixes & UX.* **Field manager** now has one **universal "Save changes"** button (was a Save button per row). Added a styled **404 page** (React Router catch-all) and a root **`<ScrollRestoration>`** so navigating after editing no longer leaves the page scrolled mid-form; all in-app navigation switched from full-reload `<a>` to SPA `<Link>`. **Export my data** now downloads via `fetch`+blob (the old `<a href="/api/...">` full-page nav hit the SPA asset fallback and 404'd). **Edit my profile** is now a clear bordered button on the dashboard (was faint muted text). Added a **Register free** button + **Support** link to the landing top bar. Surfaced a **support email** (`contact@sakina.lk`) in the footer, Settings (new "Need help?" card), Privacy policy, the 404 page, and the account-on-hold screen. |
 | **v1.3.0** | *Rebrand to Sakina + domain + a11y.* Rebranded Nikah → **Sakina** (new crescent "S" logo, teal+gold theme); moved to **sakina.lk** (custom domain + canonical/OG/sitemap/robots). **Poppins self-hosted** (8KB latin subset, preloaded, swap) instead of Google Fonts — no perf regression. **Accessibility**: darker muted text + `brand-700` buttons for AA contrast, aria-labels on filters/QR/selects. OTP SMS + manifest now say Sakina. |
 | **v1.2.1** | *Copy & clarity.* Fixed the "profile is live" banner (browsing is available now). Clarified the Field-manager controls: **On form** (collect the field) vs **Visibility** (where it shows to others). |

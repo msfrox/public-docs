@@ -1,3 +1,22 @@
 theme: jekyll-theme-cayman
 title: Public Docs
 description: Documentation mirrored from private repos
+
+# jekyll-relative-links is on GitHub Pages' safe-mode plugin whitelist, so
+# this works on Pages' own build without needing a custom Actions workflow.
+# It rewrites links like [x](readme.md) to the page's real permalink
+# (readme.html) instead of leaving the literal .md target, which 404s.
+plugins:
+  - jekyll-relative-links
+
+# Pages don't get a layout unless something sets one, and none of these
+# files (nor the root index.md) ever had a `layout:` in front matter -- so
+# the cayman theme's header/nav has never actually been rendered, even for
+# the homepage. This applies it site-wide without needing every mirrored
+# file (which get overwritten by the sync) to carry `layout: default`.
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"

@@ -1,10 +1,14 @@
+---
+title: Infiniboard — the master guide
+repo: infiniboard
+---
 # Infiniboard — the master guide
 
 How to actually *use* Infiniboard (board.gear.lk) well — every tool, the settings that matter, and
 recipes for the things you'll reach for (mindmaps, diagrams, plans). Written for anyone on the team,
 no prior whiteboard experience assumed. For the technical/maintenance side see
-[HANDOFF.md](HANDOFF.md) / [MAINTAINING.md](MAINTAINING.md); for driving the board with Claude see
-[AI-CONNECTOR.md](AI-CONNECTOR.md).
+[HANDOFF.md](https://github.com/msfrox/infiniboard/blob/main/HANDOFF.md) / [MAINTAINING.md](https://github.com/msfrox/infiniboard/blob/main/MAINTAINING.md); for driving the board with Claude see
+[AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md).
 
 ## The 30-second model
 
@@ -133,12 +137,12 @@ renders the board without a login (media included). Delete the link any time to 
 - **Export** / **Load scene** — read/write the `.excalidraw` file format.
 - **Import diagram (Claude)** — open a Claude-authored diagram: an Infiniboard *SceneSpec* (`nodes`/
   `cards`) or an `.excalidraw` scene. This is how you bring a board Claude drew for you onto the canvas
-  (see [AI-CONNECTOR.md](AI-CONNECTOR.md) and the `infiniboard-board` skill).
+  (see [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md) and the `infiniboard-board` skill).
 
 **AI assist** (menu) — summarize the board's contents into bullets (Workers AI).
 
 **Connect to Claude** (menu → "Connect to Claude (token)") — mint a personal token so Claude can read
-and draw on your live board via the MCP server. Setup + usage in [AI-CONNECTOR.md](AI-CONNECTOR.md) §4.
+and draw on your live board via the MCP server. Setup + usage in [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md) §4.
 
 ---
 
