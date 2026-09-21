@@ -32,6 +32,11 @@ Documentation mirrored from private repos, organized by source repo.
 - [Infinity Hub — Backlog](repos/infinity-hub/backlog.md)
 - [Infinity Hub](repos/infinity-hub/readme.md)
 
+## [mysite](repos/mysite/)
+
+- [Backlog — shehanferoze.com](repos/mysite/backlog.md)
+- [shehanferoze.com — \"Shehan's Desktop\](repos/mysite/readme.md)
+
 ## [Prayer-Time-Site](repos/Prayer-Time-Site/)
 
 - [Backlog](repos/Prayer-Time-Site/backlog.md)
