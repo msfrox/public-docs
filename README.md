@@ -23,10 +23,15 @@ Shehan's other repos into `repos/<repo-name>/`.
    only knows about one repo at a time and has no way to know what got lowercased or omitted on
    the mirror side; and it has to re-run on every sync rather than being a one-off hand-edit,
    because step 1 overwrites `repos/<repo-name>/` wholesale on every push from that repo.
-3. `_config.yml` sets `defaults: layout: default` for all pages and enables the
-   `jekyll-relative-links` plugin (on GitHub Pages' safe-mode whitelist, so it works on Pages'
-   own classic build without needing a custom Actions-based Pages deploy) to turn `[x](readme.md)`
-   into a link to the page's real permalink (`readme.html`).
+3. `_config.yml` sets `defaults: layout: default` for all pages, sets `url`/`baseurl` to match
+   where this actually lives (`https://msfrox.github.io/public-docs` — a *project* Pages site,
+   not a user/org site or custom domain, so it is not served at the domain root), and enables the
+   `jekyll-relative-links` and `jekyll-seo-tag` plugins (both on GitHub Pages' safe-mode plugin
+   whitelist, so this works on Pages' own classic build without needing a custom Actions-based
+   Pages deploy). `jekyll-relative-links` turns `[x](readme.md)` into a link to the page's real
+   permalink (`readme.html`); `jekyll-seo-tag` has to be listed explicitly even though nothing
+   here calls it directly, because the cayman theme's own layout does (`{% seo %}`) — see
+   `_config.yml`'s comment and `docs/link-check-ci.md` for how big a deal that turned out to be.
 
 Re-run the normalizer locally any time with `python3 scripts/normalize_mirrors.py` from the repo
 root — it's idempotent.
@@ -34,10 +39,27 @@ root — it's idempotent.
 ## Local preview
 
 ```
-gem install --user-install jekyll bundler jekyll-theme-cayman jekyll-relative-links
-export PATH="$HOME/.local/share/gem/ruby/3.1.0/bin:$PATH"   # or wherever `gem env gempath` says
-jekyll serve -H 0.0.0.0
+bundle install
+PAGES_REPO_NWO=msfrox/public-docs bundle exec jekyll serve -H 0.0.0.0 --safe
 ```
+
+`--safe` matters: it's the only way to reproduce GitHub Pages' own plugin whitelist locally (see
+`docs/link-check-ci.md`) rather than a looser build that passes here and fails on Pages. Because
+`baseurl` is set, the site is served under `/public-docs/`, e.g.
+`http://localhost:4000/public-docs/` — matching production rather than `jekyll serve`'s bare
+root. `PAGES_REPO_NWO` stands in for the repo-name auto-detection GitHub's own builder does; the
+build works without it too, just with a lint warning about missing GitHub metadata.
+
+## CI: link checking
+
+`.github/workflows/link-check.yml` builds the site exactly as above and runs
+`scripts/check_links.rb` (html-proofer) against the **built HTML**, not the markdown source —
+the 2026-09-20 mirror-link bug (every cross-document link 404ing) only became visible after
+Jekyll rendered a link. A broken internal link fails the build; a broken external link is only
+reported, never fails it (several of the GitHub-fallback links below point at private repos and
+404 for anyone without access, by design). See `docs/link-check-ci.md` for the full writeup,
+including a real production outage this work found and fixed along the way (the site's own
+GitHub Pages build had been failing since 2026-09-21).
 
 ## Known limitations
 
