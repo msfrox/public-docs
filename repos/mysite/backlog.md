@@ -1,7 +1,3 @@
----
-title: Backlog — shehanferoze.com
-repo: mysite
----
 # Backlog — shehanferoze.com
 
 _Forward plan for the "Shehan's Desktop" build (see VISION.md — the source of truth
@@ -23,9 +19,22 @@ for all concept details). Phases are shippable chunks, in order._
   `.os-client`; `.os-viewport` is a size container with `contain: paint` so page-level
   `position: fixed` pins to the window and `100cqh` = window viewport (used by Deck,
   404, photos pages). Keyboard scrolling handled (focused client + body-key fallback).
-- Phase-1 leftovers (cosmetic, superseded by later phases): photos-desk items can poke
-  past window edges (Phase 4 restyles that app); closing the home browser minimizes to
-  desktop (re-open via taskbar); "ship only active shell's JS/CSS" deferred to Phase 9.
+- Phase-1 leftovers: "ship only active shell's JS/CSS" deferred to Phase 9.
+  - [x] 2026-09-22 (away session): desk items poking past the viewport edge when dragged
+        far — `os-shell.ts` clamped the drag to `innerWidth - 60` instead of the item's
+        own measured width; now clamps to `innerWidth - r.width`. Reproduced live (drag
+        `.di-note` 5000px right → ~66px overflow) and reverified fixed (flush with the
+        edge). Regression test: `tests/known-bugs.spec.ts` ("fixed: desk items can no
+        longer be dragged past the viewport edge").
+  - [x] 2026-09-22 (away session): closing the home browser now actually closes it
+        instead of minimizing — `closeWin()` gives the main window on `/` a real
+        `.is-closed` state (hidden, distinct from `.is-min`), and the taskbar's home
+        icon lets the click through as a real navigation (reload) instead of restoring
+        the old instance in place. Reproduced live (close → taskbar icon un-hid the
+        same node with no reload) and reverified fixed (close → `.is-closed`, not
+        `.is-min` → taskbar click reloads the page). Regression test:
+        `tests/known-bugs.spec.ts` ("fixed: closing the home browser actually closes
+        it instead of minimizing").
 
 ## Phase 2 — Homepage v2 (inside browser chrome) ✅ (2026-06-11, deployed)
 - [x] Keep hero (boot lines, kinetic name, lede)

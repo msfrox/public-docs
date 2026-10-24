@@ -1,7 +1,3 @@
----
-title: "shehanferoze.com — \"Shehan's Desktop\""
-repo: mysite
----
 # shehanferoze.com — "Shehan's Desktop"
 
 The personal site of Shehan Feroze, built as an operating system. Visitors "log in"
@@ -10,7 +6,7 @@ resizable windows, desk clutter, and one app per section of the site. On phones 
 same machine becomes Shehan's phone — lock screen, homescreen, full-screen app sheets.
 
 **Live:** https://shehanferoze.com · Cloudflare Worker `shehanferoze-com`
-**Concept doc:** [VISION.md](https://github.com/msfrox/mysite/blob/main/VISION.md) · **Plan / session handoff:** [BACKLOG.md](backlog.md)
+**Concept doc:** [VISION.md](VISION.md) · **Plan / session handoff:** [BACKLOG.md](BACKLOG.md)
 
 ## The apps
 
