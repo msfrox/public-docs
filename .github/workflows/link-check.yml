@@ -1,0 +1,48 @@
+name: Link check
+
+# Builds the site the same way GitHub Pages' classic builder does (jekyll
+# build --safe, via the pinned `github-pages` gem in the Gemfile) and checks
+# the RENDERED output for broken links -- not the markdown source. The
+# 2026-09-20 mirror-link bug (every cross-document link 404ing) only showed
+# up after Jekyll rendered a link, so a source-level check would have missed
+# it; see scripts/check_links.rb for why internal failures fail the build
+# but external ones don't.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    env:
+      # Ruby defaults to US-ASCII when the runner's locale isn't UTF-8-aware,
+      # which makes html-proofer 5.x silently report zero links found on any
+      # file containing non-ASCII text (an em dash in a title is enough) --
+      # see docs/link-check-ci.md. ubuntu-latest ships a UTF-8 locale, but
+      # this is cheap insurance against a runner image change.
+      LANG: C.UTF-8
+      JEKYLL_ENV: production
+      # jekyll-github-metadata (pulled in by the theme via github-pages'
+      # DEFAULT_PLUGINS) otherwise needs to guess the repo name from a git
+      # remote named "origin", which actions/checkout doesn't always leave
+      # named that; this is what GitHub's own Pages builder sets internally.
+      PAGES_REPO_NWO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          bundler-cache: true
+
+      - name: Build site (matching GitHub Pages' classic --safe builder)
+        run: bundle exec jekyll build --safe
+
+      - name: Check links in the built site
+        run: bundle exec ruby scripts/check_links.rb

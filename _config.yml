@@ -2,12 +2,40 @@ theme: jekyll-theme-cayman
 title: Public Docs
 description: Documentation mirrored from private repos
 
-# jekyll-relative-links is on GitHub Pages' safe-mode plugin whitelist, so
-# this works on Pages' own build without needing a custom Actions workflow.
-# It rewrites links like [x](readme.md) to the page's real permalink
-# (readme.html) instead of leaving the literal .md target, which 404s.
+# This is a GitHub Pages *project* site (msfrox.github.io/public-docs/), not a
+# user/org site or a custom domain -- so it is NOT served at the domain root.
+# Without this, every root-absolute path Jekyll generates (the theme's own
+# /assets/css/style.css, and every permalink jekyll-relative-links rewrites a
+# [x](readme.md) link into, e.g. /repos/mysite/backlog.html) resolves one
+# level too high and 404s on the live site, even though it works locally at
+# `jekyll serve`'s own root. Confirmed 2026-09-22: GitHub Pages' own build API
+# (`gh api repos/msfrox/public-docs/pages`) reports this repo's pages url as
+# https://msfrox.github.io/public-docs/ -- so baseurl must be "/public-docs".
+url: "https://msfrox.github.io"
+baseurl: "/public-docs"
+
+# Both plugins are on GitHub Pages' safe-mode plugin whitelist, so this works
+# on Pages' own classic build without needing a custom Actions workflow.
+#
+# jekyll-relative-links rewrites links like [x](readme.md) to the page's
+# real permalink (readme.html) instead of leaving the literal .md target,
+# which 404s.
+#
+# jekyll-seo-tag is required, not optional, even though it isn't used
+# directly here: the cayman theme's own _layouts/default.html calls the
+# `{% seo %}` tag. A gem-based theme's own runtime dependencies (declared in
+# its gemspec) get auto-loaded when Jekyll builds normally, but NOT when
+# Jekyll builds `--safe` -- and GitHub Pages' classic builder always builds
+# `--safe`. Without an explicit entry here, `--safe` refuses to load the
+# theme's own required plugin and every page render dies with
+# `Liquid syntax error ... Unknown tag 'seo'`, breaking the whole site.
+# Root-caused 2026-09-22 by reproducing the exact pinned `github-pages` gem
+# build locally with --safe (`gh api repos/msfrox/public-docs/pages/builds`
+# had shown three straight "Page build failed" builds with no other detail).
+# See docs/link-check-ci.md for the reproduction steps.
 plugins:
   - jekyll-relative-links
+  - jekyll-seo-tag
 
 # Pages don't get a layout unless something sets one, and none of these
 # files (nor the root index.md) ever had a `layout:` in front matter -- so
