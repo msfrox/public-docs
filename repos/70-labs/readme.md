@@ -1,7 +1,3 @@
----
-title: 70 Labs
-repo: 70-labs
----
 # 70 Labs
 
 A hub of **10 wild, edge-native mini-apps** on a single Cloudflare Worker — built to learn
@@ -24,6 +20,8 @@ the newest web/AI tech *and* to actually get work done for Infinity Media & its 
 | 10 | Voice Notes | `/apps/voice/` | Whisper + Llama + MeloTTS |
 | 11 | Coach | `/apps/coach/` | AI fitness coach · Workers AI + offline-first localStorage (planned to spin out into its own app) |
 | 12 | SL Delivery Cost | `/apps/delivery/` | client-only, editable rates |
+| 13 | Carousel Maker | `/apps/carousel/` | Canvas/OffscreenCanvas |
+| 14 | Invoice Forge | `/apps/invoice/` | client-only, pdf-lib |
 
 ## Architecture
 - **One Worker.** `public/` is served as static assets (fast, cached). Only `/api/*` runs the Worker.

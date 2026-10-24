@@ -1,7 +1,3 @@
----
-title: 70 Labs — Backlog
-repo: 70-labs
----
 # 70 Labs — Backlog
 
 The shipped 10 are in `/public/apps/`. Everything below is the idea bank, roughly
@@ -29,10 +25,10 @@ Legend: ⭐ = strong next pick · 🧪 = mostly a tech-learning vehicle · 💼 
 ## ⭐ Next up (high value)
 11. ⭐💼 **Brand Brain (RAG)** — upload brand guides/PDFs → chat grounded in them. *Workers AI + Vectorize + AutoRAG.*
 12. ⭐💼 **Post Scheduler Lite** — calendar of brand posts synced to ClickUp via API. *Workers + D1 + Cron Triggers.*
-13. ⭐💼 **Carousel Maker** — type bullet points → export 1080×1080 IG carousel PNGs. *Canvas/OffscreenCanvas.*
+13. ✅ ⭐💼 **Carousel Maker** — type bullet points → export 1080×1080 IG carousel PNGs. *Canvas/OffscreenCanvas.* Shipped `/apps/carousel/` — 5 themes, auto-fit text sizing, left/center alignment, optional slide counter/handle/swipe hint, per-slide or bulk PNG export (OffscreenCanvas), state saved to localStorage.
 14. ⭐💼 **Stock-Lookup** — scan a barcode → pull Gearz/TecRoot stock from the xlsx/D1. *BarcodeDetector API + D1.*
 15. ⭐🧪 **Edge Chat** — streaming multi-model chat (Llama 4 Scout, gpt-oss-120b, Kimi). *Workers AI streaming + SSE.*
-16. ⭐💼 **Invoice Forge** — fill a branded invoice, export PDF. *pdf-lib in the browser.*
+16. ✅ ⭐💼 **Invoice Forge** — fill a branded invoice, export PDF. *pdf-lib in the browser.* Shipped `/apps/invoice/` — line items, discount %, tax %, optional logo, LKR/USD/GBP/EUR/INR, draft autosaves to localStorage.
 17. ⭐🧪 **Realtime Whiteboard** — multiplayer drawing room. *Durable Objects + Canvas + CRDT-lite.*
 18. ⭐💼 **Hashtag Lab** — niche hashtag sets + reach tiers for SL cycling/tech. *Workers AI + curated lists.*
 19. ⭐🧪 **AI Background Remover** — cut out product from photo, on-device. *Transformers.js / WebGPU (RMBG model).*
