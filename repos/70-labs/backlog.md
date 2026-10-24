@@ -1,3 +1,7 @@
+---
+title: 70 Labs — Backlog
+repo: 70-labs
+---
 # 70 Labs — Backlog
 
 The shipped 10 are in `/public/apps/`. Everything below is the idea bank, roughly
