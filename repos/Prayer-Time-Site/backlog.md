@@ -1,7 +1,3 @@
----
-title: Backlog
-repo: Prayer-Time-Site
----
 # Backlog
 
 ## Pending
