@@ -1,7 +1,3 @@
----
-title: Coach — AI fitness, everywhere
-repo: coach
----
 # Coach — AI fitness, everywhere
 
 An offline-first AI fitness coach that runs as a **web app (PWA)** and **native iOS/Android wrappers**,
