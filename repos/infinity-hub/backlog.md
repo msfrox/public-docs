@@ -1,3 +1,7 @@
+---
+title: Infinity Hub — Backlog
+repo: infinity-hub
+---
 # Infinity Hub — Backlog
 
 _Internal-only (repo root, not published to the site). Started 2026-06-10._
