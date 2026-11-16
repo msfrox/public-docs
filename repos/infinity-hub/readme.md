@@ -1,7 +1,3 @@
----
-title: Infinity Hub
-repo: infinity-hub
----
 # Infinity Hub
 
 Internal knowledge base and tool hub for **Infinity Media / Infinity Solutions**.  
@@ -42,7 +38,7 @@ Push to `main` → Cloudflare Pages automatically builds and deploys to **hub.ge
 | Output directory | `dist` |
 | Node version | 20+ (set `NODE_VERSION=20` env var if needed) |
 
-See [`DEPLOY.md`](https://github.com/msfrox/infinity-hub/blob/main/DEPLOY.md) for the full one-time Cloudflare Pages setup.
+See [`DEPLOY.md`](DEPLOY.md) for the full one-time Cloudflare Pages setup.
 
 ---
 
