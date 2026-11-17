@@ -16,7 +16,7 @@ cards and the resume block all live in this one file.
 | ID | Card | Model | Status |
 |---|---|---|---|
 | T1 | Tighten `.gitattributes` to force LF | Sonnet | done 2026-11-17 (`90a90b3`) |
-| T2 | Audit what each source repo publishes | Sonnet | done 2026-11-17 (`63697ff`); audit awaits Shehan's read, nothing removed |
+| T2 | Audit what each source repo publishes | Sonnet | done 2026-11-17 (`63697ff`). **Decided on default 2026-11-18** (Shehan: "if anything needs a decision use the recommanded option"): the audit's lists are approved and applied in each source repo; history is NOT rewritten (option a: accept, rotate anything real). Shehan to confirm as D4 in fable-sprint OPEN-QUESTIONS. Still his: Steam key rotation, the phone numbers, infiniboard's Access setup |
 | T3 | Record the sync token: owner, scope, expiry | Sonnet | done 2026-11-17 (`6c58877`); expiry marked "Shehan to supply" |
 
 ## Resume
