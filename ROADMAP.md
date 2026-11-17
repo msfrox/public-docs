@@ -15,14 +15,16 @@ cards and the resume block all live in this one file.
 
 | ID | Card | Model | Status |
 |---|---|---|---|
-| T1 | Tighten `.gitattributes` to force LF | Sonnet | todo |
-| T2 | Audit what each source repo publishes | Sonnet | todo, ready (Q9 answered 17 Nov: take the recommendation) |
-| T3 | Record the sync token: owner, scope, expiry | Sonnet | todo, needs Shehan for the expiry date |
+| T1 | Tighten `.gitattributes` to force LF | Sonnet | done 2026-11-17 (`90a90b3`) |
+| T2 | Audit what each source repo publishes | Sonnet | done 2026-11-17 (`63697ff`); audit awaits Shehan's read, nothing removed |
+| T3 | Record the sync token: owner, scope, expiry | Sonnet | done 2026-11-17 (`6c58877`); expiry marked "Shehan to supply" |
 
 ## Resume
 
-**Model: Sonnet 5.5. Effort: medium.** First card: T1. Nothing is in flight.
-Q9 answered 2026-11-17: "do the recommandation" — guides and changelogs stay public; READMEs and backlogs of private repos come off, after Shehan reads T2's audit. Nothing is removed before that.
+**Model: Sonnet 5.5. Effort: medium.** T1–T3 are done and committed locally on `main`; **nothing is pushed** (a push to `main` publishes the site, and the repo is public).
+Waiting on Shehan: (1) read `docs/mirror-audit-2026-11.md` and approve or change each repo's proposed `files:` list; (2) decide whether old versions need purging from this repo's history; (3) supply the `DOCS_SYNC_TOKEN` expiry (README, "Sync token"); (4) say when to push.
+After he approves: applying each list is a follow-up in that source repo, by its own session. Coach's list should be trimmed before coach's held commits are pushed. Then run link-check here, since pages linking to removed `readme.md`/`backlog.md` will break.
+Note: the audit is excluded from the Pages build in `_config.yml`, but pushing it still puts its text in a public repo. Decide before pushing.
 
 ## Cards
 
