@@ -48,3 +48,7 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+
+# Working audit with security findings; keep it out of the published site.
+exclude:
+  - docs/mirror-audit-2026-11.md
