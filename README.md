@@ -72,3 +72,38 @@ GitHub Pages build had been failing since 2026-09-21).
   happens to share a mirrored file's basename but lives in a subdirectory (e.g.
   `public/data/README.md` vs. the mirrored top-level `readme.md`) is correctly told apart by
   checking for a `/` in the link path — don't simplify that check away.
+
+## Sync token
+
+Every source repo pushes here with one Actions secret, `DOCS_SYNC_TOKEN`, used by the checkout
+step in its `.github/workflows/sync-docs.yml`. If it expires, every sync fails on the same day
+and nothing says so.
+
+**Where the secret is set.** Checked 2026-11-17 with `gh secret list -R msfrox/<repo>` (names
+only; no values were read). It exists in all eight: 70-labs, coach, mysite, Sakina,
+infinity-hub, infinity-consultants-site, infiniboard, Prayer-Time-Site. It is not set on this
+repo.
+
+**What it needs.** Read and write **Contents** on `msfrox/public-docs` and nothing else. It must
+not reach the private source repos.
+
+**Recommended.** One fine-grained personal access token, resource owner `msfrox`, repository
+access limited to `msfrox/public-docs`, permission Contents: read and write. A classic token
+(`repo` scope) would also touch every private repo, so avoid it.
+
+**Expiry.** Shehan to supply. Not recorded here because it can only be read from GitHub:
+Settings → Developer settings → Personal access tokens → Fine-grained tokens, then the
+token's "Expires on" line. If the secret is a classic token, read it under Tokens (classic).
+If you don't know which token it is, there is no way to tell from the secret itself (secret
+values are write-only). Then rotate it, and record the new date here.
+
+| Field | Value |
+|---|---|
+| Secret name | `DOCS_SYNC_TOKEN` |
+| Token type | Shehan to supply (fine-grained recommended) |
+| Scope | Shehan to supply (should be Contents: read and write on `msfrox/public-docs` only) |
+| Expires | **Shehan to supply** |
+
+Rotating it means updating the secret in all eight repos (`gh secret set DOCS_SYNC_TOKEN -R
+msfrox/<repo>`, run by Shehan, never by an agent) and then pushing any one to confirm a sync
+succeeds. A failed sync shows as a red "Sync Public Docs" run in that repo's Actions tab.
