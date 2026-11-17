@@ -16,13 +16,13 @@ cards and the resume block all live in this one file.
 | ID | Card | Model | Status |
 |---|---|---|---|
 | T1 | Tighten `.gitattributes` to force LF | Sonnet | todo |
-| T2 | Audit what each source repo publishes | Sonnet | todo, waits on Q9 |
+| T2 | Audit what each source repo publishes | Sonnet | todo, ready (Q9 answered 17 Nov: take the recommendation) |
 | T3 | Record the sync token: owner, scope, expiry | Sonnet | todo, needs Shehan for the expiry date |
 
 ## Resume
 
 **Model: Sonnet 5.5. Effort: medium.** First card: T1. Nothing is in flight.
-Waiting on Shehan: `fable-sprint/S16-PLAN.md` Q9 (which private docs should be public at all).
+Q9 answered 2026-11-17: "do the recommandation" — guides and changelogs stay public; READMEs and backlogs of private repos come off, after Shehan reads T2's audit. Nothing is removed before that.
 
 ## Cards
 
@@ -35,7 +35,7 @@ Don't: touch `repos/**` by hand; the sync overwrites it.
 ### T2 — Audit what each source repo publishes        [Sonnet] · effort medium · ~45 min
 Why: every source repo copied the same template `docs-sync.yml`, which lists `CHANGELOG.md`, `README.md`, `BACKLOG.md` and `GUIDE.md`. So the README and the idea backlog of **private** repos (70-labs, coach, mysite, Sakina, infinity-hub, infinity-consultants-site, infiniboard) are on a public site, chosen by a template and not by a decision. Nobody has checked them for client names, internal URLs or security notes.
 Context to read: `README.md` here; each source repo's `.github/docs-sync.yml`; `repos/*/` here.
-Do: read every mirrored file and list, per repo, anything that should not be public (client names, staff names, internal hostnames, account ids, security weaknesses, unreleased plans). Write the findings to `docs/mirror-audit-2026-11.md` with a recommended `files:` list per repo. Default rule, unless Shehan answers Q9 otherwise: a user guide and a changelog may be public; a backlog and a README of a private repo are not.
+Do: read every mirrored file and list, per repo, anything that should not be public (client names, staff names, internal hostnames, account ids, security weaknesses, unreleased plans). Write the findings to `docs/mirror-audit-2026-11.md` with a recommended `files:` list per repo. Rule (Q9, Shehan 2026-11-17, took the recommendation): a user guide and a changelog may be public; a backlog and a README of a private repo are not.
 Done when: the audit file exists with one section per mirrored repo and a proposed `docs-sync.yml` for each; nothing has been removed yet.
 Don't: edit other repos' `docs-sync.yml` or delete mirrored files in this card. Applying the lists is a follow-up in each source repo, owned by that repo's session, after Shehan has read the audit.
 
