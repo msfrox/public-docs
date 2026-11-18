@@ -18,11 +18,6 @@ Documentation mirrored from private repos, organized by source repo.
 - [Infiniboard — the master guide](repos/infiniboard/guide.md)
 - [Infiniboard](repos/infiniboard/readme.md)
 
-## [infinity-consultants-site](repos/infinity-consultants-site/)
-
-- [Infinity Consultants site — Backlog](repos/infinity-consultants-site/backlog.md)
-- [Infinity Consultants — Website](repos/infinity-consultants-site/readme.md)
-
 ## [infinity-hub](repos/infinity-hub/)
 
 - [Infinity Hub — Backlog](repos/infinity-hub/backlog.md)
