@@ -160,7 +160,7 @@ Edit the `ADMIN_PHONES` secret (comma-separated E.164 numbers) and that person b
 an admin the next time they log in:
 ```
 npx wrangler secret put ADMIN_PHONES
-# paste e.g.  +94755655166,+94770000000
+# paste e.g.  +947XXXXXXXX,+947YYYYYYYY
 ```
 Removing a number revokes admin on their next request.
 
