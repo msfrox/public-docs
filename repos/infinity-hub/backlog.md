@@ -1,7 +1,3 @@
----
-title: Infinity Hub — Backlog
-repo: infinity-hub
----
 # Infinity Hub — Backlog
 
 _Internal-only (repo root, not published to the site). Started 2026-06-10._
@@ -15,10 +11,6 @@ fits how we work** — eventually replacing ClickUp (bloated, slow, bad on mobil
 > works from phones; the #1 complaint about ClickUp is the mobile experience. Every
 > tool must be designed for a phone first and feel instant.
 
-- [ ] **ClickUp audit:** inventory every ClickUp feature we actually use today
-      (spaces/folders/lists structure, custom fields, statuses, content calendar
-      workflow, post tracker sync, reminders, time tracking…) — that list is the
-      baseline feature set the Hub platform must cover before we can switch.
 - [ ] **Ongoing research:** keep researching work-management / agency-ops tooling and
       add more feature ideas to this backlog as they come up. Living document.
 
@@ -43,9 +35,6 @@ fits how we work** — eventually replacing ClickUp (bloated, slow, bad on mobil
       checkbox, url**; values render in the task dialog + as chips on cards. **Still to do:**
       formula & rollup types; show as List columns; per-field filtering/grouping; promote
       to a shared module so planner & future boards reuse it (not copy-paste).
-- [ ] **ClickUp REST integration (Worker)** — read tasks by custom id (INF-xxx / TR604-xx),
-      map ClickUp custom fields → our fields. Needs a ClickUp API token as a **Worker secret
-      (user-set, not Claude)**. Powers Post Tracker import + post-tracker sync.
 
 ## Architecture decision — where heavy apps live & how they stay consistent
 
@@ -102,6 +91,8 @@ no production secrets involved — same as the hub setup.)
         doc is confidential and stays in `_private/` — never put salary figures in committed code.
 
 ## Work management / collaborative app (the full ClickUp replacement)
+
+> Current plan: infinitask's master plan (`infinitask/plans/MASTER-PLAN.md`) and `decisions/0002`. The text below is history.
 
 > **PLAN ONLY — do not build yet.** Documented from the team's current ClickUp space
 > (screenshots in `_private/`, 2026-06-18). The **Post Tracker** above is the first slice

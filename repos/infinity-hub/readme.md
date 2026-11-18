@@ -1,11 +1,8 @@
----
-title: Infinity Hub
-repo: infinity-hub
----
 # Infinity Hub
 
 Internal knowledge base and tool hub for **Infinity Media / Infinity Solutions**.  
-Built with [Astro + Starlight](https://starlight.astro.build/), deployed to **[hub.gear.lk](https://hub.gear.lk)** via Cloudflare Pages (auto-deploy on push to `main`).
+Built with [Astro + Starlight](https://starlight.astro.build/), served from **[hub.gear.lk](https://hub.gear.lk)** by a Cloudflare Worker (static site plus an API backed by D1 and R2).  
+See [ROADMAP.md](ROADMAP.md) for what is planned and [DEPLOY.md](DEPLOY.md) for how it runs.
 
 ---
 
@@ -16,7 +13,8 @@ Built with [Astro + Starlight](https://starlight.astro.build/), deployed to **[h
 | **Clients** | Positioning, personas, and brand guidelines for each managed brand (Cykel, Gearz, Reboot, TecRoot) |
 | **Meta Ads** | Full Meta Ads Playbook v2.0 — 11 chapters from foundations to reporting |
 | **SOPs** | Standard operating procedures — graphic design specs, morning standup, daily tasks |
-| **Tools** | Live Meta Ads Dashboard at `/tools/meta-ads/` — checklists, per-client tabs, ClickUp sync |
+| **Tools** | In-hub tools under `/tools/` (Meta Ads Dashboard, planner, whiteboard, post tracker), gated per user |
+| **Dashboard & admin** | Home page launcher at `/`, admin console at `/admin-console` (users, apps, grants) |
 | **Maintainers** | How to edit the site via the in-browser `/admin` editor or with Claude Code |
 
 ---
@@ -34,17 +32,12 @@ npm run preview   # serve the built /dist locally
 
 ## Deploying
 
-Push to `main` → Cloudflare Pages automatically builds and deploys to **hub.gear.lk**.
+The hub is a **Cloudflare Worker with Static Assets**, not a Pages site. `wrangler.jsonc` points
+the Worker at `worker/index.js` and serves `./dist` (the Astro build) as static assets.
 
-| Setting | Value |
-| ------- | ----- |
-| Build command | `npm run build` |
-| Output directory | `dist` |
-| Node version | 20+ (set `NODE_VERSION=20` env var if needed) |
-
-See [`DEPLOY.md`](https://github.com/msfrox/infinity-hub/blob/main/DEPLOY.md) for the full one-time Cloudflare Pages setup.
-
----
+Cloudflare Workers Builds runs `npm run build` (per the comment in `wrangler.jsonc`). Whether a
+push to `main` triggers it, and the exact dashboard build settings: **not verified from the
+repo** — treat a push to `main` as live. See [`DEPLOY.md`](DEPLOY.md).
 
 ## Project structure
 
@@ -60,11 +53,17 @@ src/assets/                   # Infinity logo (light + dark PNG)
 public/
   tools/meta-ads/index.html   # Standalone Meta Ads Dashboard app
   admin/                      # Sveltia CMS in-browser editor at /admin
-  assets/hub-store.js         # Shared-data helper (Gist Worker read/write)
+  assets/hub-store.js         # Shared-data helper (Gist Worker proxy)
+  assets/infinity-ui.css      # Shared UI kit (canonical; copied into the other apps)
   assets/sidebar-toggle.js    # Desktop sidebar tab toggle + mobile hide
   clients/<client>/           # Per-client logos and brand assets
   sops-assets/<sop>/          # Images used inside SOPs
   Meta-Ads-Playbook.pdf       # Downloadable playbook PDF
+worker/index.js               # Worker: /api/*, access gating, serves static assets
+worker/lib/hub-auth.js        # Canonical Access-JWT verify + grant check (copied to other apps)
+worker/schema.sql             # D1 schema
+wrangler.jsonc                # Worker config and bindings
+decisions/                    # ADRs 0001-0004 (platform boundaries)
 astro.config.mjs              # Sidebar, title, logo, favicon, head scripts
 DEPLOY.md                     # Full deploy & setup guide
 CLAUDE.md                     # Instructions for Claude Code / AI editing
@@ -98,12 +97,19 @@ New top-level sections require a new folder **and** a group entry in `astro.conf
 
 ## Infrastructure
 
-| Service | Purpose |
-| ------- | ------- |
-| Cloudflare Pages | Hosting + auto-deploy on push to `main` |
-| Cloudflare Access | Team-only access gating at `hub.gear.lk` |
-| `gist-proxy.shehan.workers.dev` | Gist Worker — Meta Ads Dashboard data sync |
+| Piece | Purpose |
+| ----- | ------- |
+| Worker `infinity-hub` | Serves `dist/` and handles `/api/*`; gates `/tools/*`, `/admin*` per user |
+| Static assets (`ASSETS`) | The Astro/Starlight site |
+| D1 `DB` (`infinity-hub-authz`) | Users, apps, grants, audit, and `tool_data` (light in-hub tools only; see ADR 0001) |
+| R2 `R2` (`infinity-hub-files`) | File uploads (`/api/files`); KV `FILES` is the legacy fallback |
+| Workers AI `AI` | `/api/ai` |
+| Cloudflare Access | Google sign-in on `hub.gear.lk`; the Worker verifies the Access JWT on every request |
+| `gist-proxy.shehan.workers.dev` | Gist Worker, still used by the Meta Ads dashboard only |
 | `sveltia-cms-auth.shehan.workers.dev` | OAuth backend for the `/admin` editor |
+
+`wrangler.jsonc` also binds the same D1 a second time as `infinity_hub_authz`; that is under
+review (HUB-T3 in [TASKS.md](TASKS.md)).
 
 ---
 
