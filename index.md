@@ -11,10 +11,6 @@ Documentation mirrored from private repos, organized by source repo.
 - [70 Labs — Backlog](repos/70-labs/backlog.md)
 - [70 Labs](repos/70-labs/readme.md)
 
-## [coach](repos/coach/)
-
-- [Coach — AI fitness, everywhere](repos/coach/readme.md)
-
 ## [infiniboard](repos/infiniboard/)
 
 - [Infiniboard — Backlog](repos/infiniboard/backlog.md)
