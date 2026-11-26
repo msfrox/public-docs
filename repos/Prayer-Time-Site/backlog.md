@@ -1,7 +1,3 @@
----
-title: Backlog
-repo: Prayer-Time-Site
----
 # Backlog
 
 > **2026-11-16:** the two picks below are now card **PT-4** in `TASKS.md` (how a pick is

@@ -1,14 +1,10 @@
----
-title: Sri Lanka Prayer Times — ACJU Official Timetable
-repo: Prayer-Time-Site
----
 # Sri Lanka Prayer Times — ACJU Official Timetable
 
 A fast, free, ad-light web app for accurate Islamic prayer times across **every
 district of Sri Lanka**, based on the official timetables of the **All Ceylon
 Jamiyyathul Ulama (ACJU)**.
 
-🌐 **Live site:** [pray.gear.lk](https://pray.gear.lk)
+🌐 **Live site:** [pray.sakina.lk](https://pray.sakina.lk) (the old address pray.gear.lk redirects here; its `/data/` stays for older readers)
 
 It is, and will always remain, **free and non-commercial** (see [License](#license)).
 
@@ -184,7 +180,8 @@ added as a one-line override in `build/build-zones.js` (the `OVERRIDES` section)
 │   ├── adm3.geojson         ← geoBoundaries ADM3 (DS divisions, Ampara cut only)
 │   └── package.json         ← turf, mapshaper (build deps only)
 ├── tests/               ← Unit tests for assets/js/pt-core.js (vitest, no browser)
-├── CNAME                ← pray.gear.lk custom domain
+├── CNAME                ← pray.gear.lk (GitHub Pages: redirect + /data/ only)
+├── wrangler.jsonc       ← the Worker that serves pray.sakina.lk
 ├── LICENSE              ← CC BY-NC-SA 4.0
 └── .github/workflows/   ← GitHub Actions Pages deploy on push
 ```
@@ -303,14 +300,20 @@ A change to a table value is a reviewed change:
 
 ---
 
-## Deploying (GitHub Pages)
+## Deploying
 
-1. Push to `main`.
-2. Settings → Pages → Source: **GitHub Actions**.
-3. `.github/workflows/pages.yml` auto-deploys on every push.
+**pray.sakina.lk (the site)** is a Cloudflare Worker of static assets (`wrangler.jsonc`).
+It does **not** deploy on push yet; deploy by hand:
 
-Custom domain: `CNAME` file points to `pray.gear.lk`. SSL is handled by Cloudflare
-in front of GitHub Pages (Cloudflare DNS → GitHub Pages origin).
+```bash
+bash build/make-site.sh _site && npx wrangler deploy
+```
+
+**pray.gear.lk (GitHub Pages)**: a push to `main` runs `.github/workflows/pages.yml`, which
+publishes every page as a redirect to the same path on pray.sakina.lk and leaves `/data/`
+untouched for readers such as the Salah-board. Settings → Pages → Source must be **GitHub Actions**.
+The `CNAME` file points to `pray.gear.lk`; SSL is handled by Cloudflare in front of GitHub Pages.
+The old address is retired once every `/data/` reader has moved.
 
 ---
 
@@ -373,7 +376,7 @@ is replaced at deploy time; the file in the repo always shows the placeholder.
 ## License
 
 **Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International
-(CC BY-NC-SA 4.0)** — see [LICENSE](https://github.com/msfrox/Prayer-Time-Site/blob/main/LICENSE).
+(CC BY-NC-SA 4.0)** — see [LICENSE](LICENSE).
 
 You are free to **use, study, share, and build on** this project for **any
 non-commercial purpose**, provided you:
