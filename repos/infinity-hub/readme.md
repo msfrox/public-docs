@@ -1,12 +1,8 @@
----
-title: Infinity Hub
-repo: infinity-hub
----
 # Infinity Hub
 
 Internal knowledge base and tool hub for **Infinity Media / Infinity Solutions**.  
-Built with [Astro + Starlight](https://starlight.astro.build/), served from **[hub.gear.lk](https://hub.gear.lk)** by a Cloudflare Worker (static site plus an API backed by D1 and R2).  
-See [ROADMAP.md](https://github.com/msfrox/infinity-hub/blob/main/ROADMAP.md) for what is planned and [DEPLOY.md](https://github.com/msfrox/infinity-hub/blob/main/DEPLOY.md) for how it runs.
+Built with [Astro + Starlight](https://starlight.astro.build/), served from **[hub.inf8.app](https://hub.inf8.app)** by a Cloudflare Worker (static site plus an API backed by D1 and R2).  
+See [ROADMAP.md](ROADMAP.md) for what is planned and [DEPLOY.md](DEPLOY.md) for how it runs.
 
 ---
 
@@ -41,7 +37,7 @@ the Worker at `worker/index.js` and serves `./dist` (the Astro build) as static 
 
 Cloudflare Workers Builds runs `npm run build` (per the comment in `wrangler.jsonc`). Whether a
 push to `main` triggers it, and the exact dashboard build settings: **not verified from the
-repo** — treat a push to `main` as live. See [`DEPLOY.md`](https://github.com/msfrox/infinity-hub/blob/main/DEPLOY.md).
+repo** — treat a push to `main` as live. See [`DEPLOY.md`](DEPLOY.md).
 
 ## Project structure
 
@@ -79,7 +75,7 @@ CLAUDE.md                     # Instructions for Claude Code / AI editing
 
 | Method | How |
 | ------ | --- |
-| **In-browser editor** | Go to `hub.gear.lk/admin` — sign in with GitHub (Infinity team only) |
+| **In-browser editor** | Go to `hub.inf8.app/admin` — sign in with GitHub (Infinity team only) |
 | **Claude Code** | Open this repo; use the prompts in **Maintainers → Edit with Claude** |
 | **Direct edit** | Edit `.md` files in `src/content/docs/`, commit, and push |
 
@@ -108,12 +104,12 @@ New top-level sections require a new folder **and** a group entry in `astro.conf
 | D1 `DB` (`infinity-hub-authz`) | Users, apps, grants, audit, and `tool_data` (light in-hub tools only; see ADR 0001) |
 | R2 `R2` (`infinity-hub-files`) | File uploads (`/api/files`); KV `FILES` is the legacy fallback |
 | Workers AI `AI` | `/api/ai` |
-| Cloudflare Access | Google sign-in on `hub.gear.lk`; the Worker verifies the Access JWT on every request |
+| Cloudflare Access | Google sign-in on `hub.inf8.app`; the Worker verifies the Access JWT on every request |
 | `gist-proxy.shehan.workers.dev` | Gist Worker, still used by the Meta Ads dashboard only |
 | `sveltia-cms-auth.shehan.workers.dev` | OAuth backend for the `/admin` editor |
 
 `wrangler.jsonc` also binds the same D1 a second time as `infinity_hub_authz`; that is under
-review (HUB-T3 in [TASKS.md](https://github.com/msfrox/infinity-hub/blob/main/TASKS.md)).
+review (HUB-T3 in [TASKS.md](TASKS.md)).
 
 ---
 
