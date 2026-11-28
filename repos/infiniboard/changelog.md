@@ -1,7 +1,11 @@
+---
+title: Changelog
+repo: infiniboard
+---
 # Changelog
 
 All notable changes to Infiniboard. Versions follow [semver](https://semver.org/); dates are
-release dates. Pending work lives in [BACKLOG.md](BACKLOG.md).
+release dates. Pending work lives in [BACKLOG.md](backlog.md).
 
 ## Unreleased
 
@@ -193,7 +197,7 @@ the connector skill on MCP, an in-app guide, and the Cloudflare-Access finding f
   redirects token-only API calls to its login page (302) before the Worker runs, so the `ibk_` token
   can't authenticate externally (the in-app bridge + file import are unaffected). The connector code is
   correct (verified against the local Worker). Resolve by adding an Access **service token** or a
-  **bypass** policy for the connector paths — see [AI-CONNECTOR.md](AI-CONNECTOR.md) §4 and BACKLOG (P1).
+  **bypass** policy for the connector paths — see [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md) §4 and BACKLOG (P1).
 - **Embed first-link race** still open (diagnosed; workaround in GUIDE) — needs interactive debugging.
 
 ### Fork edits (require `npm run fork:build`)
@@ -230,7 +234,7 @@ The **Board ⇄ Claude connector** plus a batch of board fixes and CI/deploy har
   `tools/mcp-server.mjs` is a zero-dep stdio **MCP server** (`read_board`, `list_boards`, `draw`,
   `create_board`, `set_active_board`) — add it with `claude mcp add`. Claude's `draw` queues a spec
   (`POST /api/connect/draw`); the app imports it on load / window focus. Setup + limits in
-  [AI-CONNECTOR.md](AI-CONNECTOR.md). (Real-time-while-both-edit still needs the planned collab DO.)
+  [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md). (Real-time-while-both-edit still needs the planned collab DO.)
 - **`window.infiniboard` bridge** (signed-in user, same-origin): READ (`text`/`getScene`/`getCards`),
   DRAW (`draw(spec)`/`addElements`/`loadScene`), CARDS (`addCard`/`addNote`/`updateCard`), BOARDS
   (`boards`/`newBoard`/`useBoard`), `exportScene`.
@@ -240,7 +244,7 @@ The **Board ⇄ Claude connector** plus a batch of board fixes and CI/deploy har
 - **"Import diagram (Claude)"** menu item — open a SceneSpec or `.excalidraw` file.
 - **CLI** `tools/board-from-spec.mjs` (validate / `--push` a spec) and the **`infiniboard-board`**
   Claude skill (author a board from a description — great in Cowork).
-- **Docs:** [GUIDE.md](GUIDE.md) (master usage guide) and [AI-CONNECTOR.md](AI-CONNECTOR.md).
+- **Docs:** [GUIDE.md](guide.md) (master usage guide) and [AI-CONNECTOR.md](https://github.com/msfrox/infiniboard/blob/main/AI-CONNECTOR.md).
 
 ### Added — editor
 - **Separate "Text" colour for shape labels.** A shape's Stroke no longer recolours its bound-text
@@ -352,7 +356,7 @@ The rc.1 features (below) **plus** these fixes and a performance / responsivenes
   FontFamily mark, but confirmed the font run is **dropped on `getMarkdown()`** (notes are stored as
   Markdown, which can't carry font spans) — so it would silently lose the font on close. Reverted;
   needs an HTML/rich storage model or a custom Markdown serializer — backlogged.
-- **Font fetching is documented** in [FONTS.md](FONTS.md) (Fontsource CDN pattern + where files go).
+- **Font fetching is documented** in [FONTS.md](https://github.com/msfrox/infiniboard/blob/main/FONTS.md) (Fontsource CDN pattern + where files go).
 - **Minimap position is now responsive:** bottom-right on desktop (unchanged), **top-right on mobile
   only** (so the bottom tool island doesn't cover it); the resize grip flips to the reachable corner.
 - **Note colour picker:** the preset swatches now have spacing (they were touching).
@@ -461,7 +465,7 @@ vendored Excalidraw fork, but the committed pre-built bundle
 edited — `npm run build` does not run `npm run fork:build`. So the custom colour picker, bundled
 fonts, note format panel, frame fill, and mobile tools dropdown were all written but never made it
 into the deployed app. Rebuilt the fork; all of them are now live. Added a Release checklist to
-[MAINTAINING.md](MAINTAINING.md) so this can't silently recur.
+[MAINTAINING.md](https://github.com/msfrox/infiniboard/blob/main/MAINTAINING.md) so this can't silently recur.
 
 ### Fixed (were "not showing up" — stale fork build)
 - **Custom colour picker** (Palette / Custom tabs, SV square + hue strip). Verified rendering.
